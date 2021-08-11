@@ -1,5 +1,7 @@
 The ROS setup for GPS module (firmware version 9) ([SparkFun GPS-RTK2 Board - ZED-F9P (Qwiic)](https://www.sparkfun.com/products/15136)). 
 
+Potential GPS module for future use: [SparkFun GPS-RTK Dead Reckoning Breakout - ZED-F9R (Qwiic)](https://www.sparkfun.com/products/16344), which has a 3D IMU sensor.
+
 The driver was originally from [this link](https://github.com/KumarRobotics/ublox).
 
 Modification has been made to meet our project purpose.
