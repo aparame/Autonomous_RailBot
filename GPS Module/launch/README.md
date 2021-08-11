@@ -1,4 +1,4 @@
-## Options
+## Configuration Options (*.yaml file)
 
 Example .yaml configuration files are included in `config_examples` folder. Consult the u-blox documentation for your device for the recommended settings.
 
