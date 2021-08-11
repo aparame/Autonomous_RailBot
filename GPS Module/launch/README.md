@@ -41,20 +41,6 @@ The `ublox_gps` node supports the following parameters for all products and firm
     * `dat/rot`: [X, Y, Z] rotation [s]
     * `dat/scale`: scale change [ppm]
 
-### For firmware version 6:
-* `nmea/set`: If true, the NMEA will be configured with the parameters below.
-* `nmea/version`: NMEA version. Must be set if `nmea/set` is true.
-* `nmea/num_sv`: Maximum Number of SVs to report per TalkerId. Must be set if `nmea/set` is true.
-* `nmea/compat`: Enable compatibility mode. Must be set if `nmea/set` is true.
-* `nmea/consider`: Enable considering mode. Must be set if `nmea/set` is true.
-* `nmea/filter`: Namespace for filter flags.
-    * `nmea/filter/pos`: Disable position filtering. Defaults to false.
-    * `nmea/filter/msk_pos`: Disable masked position filtering. Defaults to false.
-    * `nmea/filter/time`: Disable time filtering. Defaults to false.
-    * `nmea/filter/date`: Disable date filtering. Defaults to false.
-    * `nmea/filter/sbas`: Enable SBAS filtering. Defaults to false.
-    * `nmea/filter/track`: Disable track filtering. Defaults to false.
-
 ### For devices with firmware >= 7:
 * `gnss` parameters:
     * `gnss/gps`: Enable GPS receiver. Defaults to true.
@@ -142,12 +128,6 @@ To publish a given u-blox message to a ROS topic, set the parameter shown below 
 
 ### All messages
 * `publish/all`: This is the default value for `publish/<class>/all` parameters below. It defaults to false. Individual message classes and messages can be enabled or disabled by setting the parameters described below to false.
-
-### AID messages (Deprecated)
-* `publish/aid/all`: This is the default value for the `publish/aid/<message>` parameters below. It defaults to `publish/all`. Individual messages can be enabled or disabled by setting the parameters below.
-* `publish/aid/alm`: Topic `~aidalm`
-* `publish/aid/eph`: Topic `~aideph`
-* `publish/aid/hui`: Topic `~aidhui`
 
 ### RXM messages
 * `publish/rxm/all`: This is the default value for the `publish/rxm/<message>` parameters below. It defaults to `publish/all`. Individual messages can be enabled or disabled by setting the parameters below.
