@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-  <arg name="param_file_name"     doc="name of param file, e.g. rover" />
+  <arg name="param_file_name"     doc="name of param file, e.g. rover" 
+                                  default="zed_f9p.yaml" />
   <arg name="param_file_dir"      doc="directory to look for $(arg param_file_name).yaml"
                                   default="$(find ublox_gps)/config" />
 
