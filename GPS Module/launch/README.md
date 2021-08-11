@@ -138,7 +138,7 @@ To enable printing INF messages to the ROS console, set the parameters below.
 * `inf/warning`: Whether to enable Warning messages for the UBX and NMEA ports and print received `INF-Warning` messages to the `ROS_WARN` console.
 
 ## Additional Topics
-To publish a given u-blox message to a ROS topic, set the parameter shown below to true. The node sets the rate of the u-blox messages to 1 measurement cycle. 
+To publish a given u-blox message to a ROS topic, set the parameter shown below to true. The node sets the rate of the u-blox messages to 1 measurement cycle. See [ZED-F9P UBX protocol](https://www.u-blox.com/sites/default/files/ZED-F9P_InterfaceDescription_%28UBX-18010854%29.pdf) for details.
 
 ### All messages
 * `publish/all`: This is the default value for `publish/<class>/all` parameters below. It defaults to false. Individual message classes and messages can be enabled or disabled by setting the parameters described below to false.
@@ -177,14 +177,14 @@ To publish a given u-blox message to a ROS topic, set the parameter shown below 
 * `publish/nav/svinfo`: Topic `~navsvinfo`
 * `publish/nav/velned`: Topic `~navvelned`. **Firmware <= 6 only.** For firmware 7 and above, see NavPVT
 
-### ESF messages (**ADR/UDR devices**)
+### ESF messages (**ADR/UDR devices only**)
 * `publish/esf/all`: This is the default value for the `publish/esf/<message>` parameters below. It defaults to `publish/all` for **ADR/UDR devices**. Individual messages can be enabled or disabled by setting the parameters below.
 * `publish/esf/ins`: Topic `~esfins`
 * `publish/esf/meas`: Topic `~esfmeas`
 * `publish/esf/raw`: Topic `~esfraw`
 * `publish/esf/status`: Topic `~esfstatus`
 
-### HNR messages (**ADR/UDR devices**)
+### HNR messages (**ADR/UDR devices only**)
 * `publish/hnr/pvt`: Topic `~hnrpvt`. **ADR/UDR devices only**
 
 ### TIM messages (**TIM devices only**)
