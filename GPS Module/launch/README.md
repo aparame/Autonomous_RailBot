@@ -143,7 +143,7 @@ To publish a given u-blox message to a ROS topic, set the parameter shown below 
 ### All messages
 * `publish/all`: This is the default value for `publish/<class>/all` parameters below. It defaults to false. Individual message classes and messages can be enabled or disabled by setting the parameters described below to false.
 
-### AID messages
+### AID messages (Deprecated)
 * `publish/aid/all`: This is the default value for the `publish/aid/<message>` parameters below. It defaults to `publish/all`. Individual messages can be enabled or disabled by setting the parameters below.
 * `publish/aid/alm`: Topic `~aidalm`
 * `publish/aid/eph`: Topic `~aideph`
