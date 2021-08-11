@@ -1,4 +1,4 @@
-The ROS setup for GPS module ([SparkFun GPS-RTK2 Board - ZED-F9P (Qwiic)](https://www.sparkfun.com/products/15136)). 
+The ROS setup for GPS module (firmware version 9) ([SparkFun GPS-RTK2 Board - ZED-F9P (Qwiic)](https://www.sparkfun.com/products/15136)). 
 
 The driver was originally from [this link](https://github.com/KumarRobotics/ublox).
 
