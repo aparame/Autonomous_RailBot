@@ -20,7 +20,7 @@ A sample launch file `ublox_device.launch` in the `launch` folder loads the para
 
 # Misc
 
-- On Ubuntu VM, to run the launch file, `chmod` has to be used to change the access permissions of the device file. Example command: `sudo chmod 777 /dev/ttyACM0`.
+- On Ubuntu VM, to run the launch file, `chmod` has to be used to change the access permission of the device file. Example command: `sudo chmod 777 /dev/ttyACM0`.
 
 ---
 
