@@ -157,7 +157,12 @@ To publish a given u-blox message to a ROS topic, set the parameter shown below 
 * `publish/nav/svinfo`: Topic `~navsvinfo`
 * `publish/nav/velned`: Topic `~navvelned`. **Firmware <= 6 only.** For firmware 7 and above, see NavPVT
 
-Automotive Dead Reckoning (ADR/UDR) devices have a inertial measurement unit (IMU).
+### TIM messages (**TIM devices only**)
+* `publish/tim/tm2`: Topic `timtm2`. **TIM devices only**
+
+---
+
+Automotive Dead Reckoning (ADR/UDR) devices have an inertial measurement unit (IMU).
 
 ### ESF messages (**ADR/UDR devices only**)
 * `publish/esf/all`: This is the default value for the `publish/esf/<message>` parameters below. It defaults to `publish/all` for **ADR/UDR devices**. Individual messages can be enabled or disabled by setting the parameters below.
@@ -168,9 +173,6 @@ Automotive Dead Reckoning (ADR/UDR) devices have a inertial measurement unit (IM
 
 ### HNR messages (**ADR/UDR devices only**)
 * `publish/hnr/pvt`: Topic `~hnrpvt`. **ADR/UDR devices only**
-
-### TIM messages (**TIM devices only**)
-* `publish/tim/tm2`: Topic `timtm2`. **TIM devices only**
 
 ## Launch
 
