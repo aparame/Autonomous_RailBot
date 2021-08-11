@@ -4,7 +4,7 @@
   <arg name="param_file_name"     doc="name of param file, e.g. rover" 
                                   default="zed_f9p.yaml" />
   <arg name="param_file_dir"      doc="directory to look for $(arg param_file_name).yaml"
-                                  default="$./" />
+                                  default="./" />
 
   <arg name="node_name"           doc="name of this node"
                                   default="ublox" />
