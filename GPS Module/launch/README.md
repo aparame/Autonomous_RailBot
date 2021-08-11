@@ -1,6 +1,6 @@
 ## Options
 
-Example .yaml configuration files are included in `config examples` folder. Consult the u-blox documentation for your device for the recommended settings.
+Example .yaml configuration files are included in `config_examples` folder. Consult the u-blox documentation for your device for the recommended settings.
 
 The `ublox_gps` node supports the following parameters for all products and firmware versions:
 * `device`: Path to the device port. Defaults to `/dev/ttyACM0`.
@@ -192,5 +192,5 @@ To publish a given u-blox message to a ROS topic, set the parameter shown below 
 
 ## Launch
 
-A sample launch file `ublox_device.launch` loads the parameters from a `zed_f9p.yaml` file in the current folder, sample configuration files are in the `config examples` folder.
+A sample launch file `ublox_device.launch` loads the parameters from a `zed_f9p.yaml` file in the current folder, sample configuration files are in the `config_examples` folder.
 The two topics to which you should subscribe are `~fix` and `~fix_velocity`. The angular component of `fix_velocity` is unused.
