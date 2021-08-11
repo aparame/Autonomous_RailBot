@@ -6,6 +6,18 @@ Modification has been made to meet our project purpose.
 
 ---
 
+# Installation
+
+Put the `src` folder under the catkin workshop directory, then use `catkin_make` when in the workshop directory. For development purpose (without `catkin_make install`), remember to use command `source <workshop_path>/devel/setup.bash` or `source <workshop_path>/devel/setup.zsh`.
+
+---
+
+# Launch
+
+
+
+---
+
 # Change history
 
 2021/08/11 Tested on Ubuntu VM
