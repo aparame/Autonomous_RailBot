@@ -14,7 +14,7 @@ Put the `src` folder under the catkin workshop directory, then use `catkin_make`
 
 # Launch
 
-
+A sample launch file `ublox_device.launch` in the `launch` folder loads the parameters from a `zed_f9p.yaml` file in the same folder. Example command: `roslaunch ublox_device.launch`.
 
 ---
 
