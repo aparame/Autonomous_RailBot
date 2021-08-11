@@ -3,3 +3,7 @@ frame_id: gps
 uart1:
   baudrate: 38400
 config_on_startup: false
+
+# Enable u-blox message publishers
+publish:
+  all: false
