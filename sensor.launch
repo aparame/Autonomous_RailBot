@@ -1,0 +1,14 @@
+<launch>
+
+  <include file="$(find ublox_gps)/launch/ublox_device.launch">
+
+  </include>
+
+  
+  
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+
+  </include>
+
+
+</launch>
