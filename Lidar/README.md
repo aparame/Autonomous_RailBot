@@ -14,7 +14,7 @@ Before we start using this LIDAR, please note that the following steps have been
 The original installation tutorial is in [this link](http://wiki.ros.org/velodyne/Tutorials/Getting%20Started%20with%20the%20Velodyne%20VLP16).
 
 * Check for the ethernet port name, type `ifconfig -a` in the terminal and identify the names of the ethernet port (normally `eth0`)
-* The LIDAR's default static IP address is **192.168.1.201**(Please do not make changes to it).
+* The LIDAR's default static IP address is **192.168.1.201** (Please do not make changes to it).
 
 ---
 
