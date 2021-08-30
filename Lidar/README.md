@@ -1,4 +1,4 @@
-# Velodyne VLP-16 on Ubuntu
+# Velodyne VLP-16
 For technical specifications, please refer to the Datasheet at [this link](https://velodynelidar.com/downloads/#datasheets%20first)
 The LIDAR will be used for object detection and autonomous driving alongside the Intel RealSense cameras
 The LIDAR is also called as the Velodyne Puck
@@ -11,13 +11,10 @@ Before we start using this LIDAR, please note that the following steps have been
 
 ## Installation
 ---
-The Velodyne VLP16/Puck can be easily installed and visualized on ROS using the steps mentioned at [this link](http://wiki.ros.org/velodyne/Tutorials/Getting%20Started%20with%20the%20Velodyne%20VLP16)
+The original installation tutorial is in [this link](http://wiki.ros.org/velodyne/Tutorials/Getting%20Started%20with%20the%20Velodyne%20VLP16).
 
-**Tips based on installation experience**
-* The Gnome menu is nothing but the *Settings* menu in your Ubuntu 20.04 LTS system. It's the same for Jetson Devices
-* On my linux machine, the Ethernet port is identified as `enp59s0` instead of `eth0` as mentioned in the above installation link. To check for your own port name, type `ifconfig -a` in your terminal and identify the names of the ethernet port on the left
-* Hence remember to replace the `eth0` with the name of your Ethernet port
-* Our LIDAR's static IP address is **192.168.126.207** as decoded from the MAC address under the VLP16
+* Check for the ethernet port name, type `ifconfig -a` in the terminal and identify the names of the ethernet port (normally `eth0`)
+* The LIDAR's default static IP address is **192.168.1.201**(Please do not make changes to it).
 
 ---
 
@@ -33,6 +30,8 @@ The Velodyne VLP16/Puck can be easily installed and visualized on ROS using the 
 ---
 
 # Change history
+
+2021/08/30 Tested on Ubuntu 18.04 LTS
 
 2021/08/18 Tested on Ubuntu 20.04 LTS
 
