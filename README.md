@@ -12,7 +12,7 @@
 
 ---
 
-## I/O ports for each devices
+## I/O ports for sensor devices
 
 ### GPS (USB)
 
