@@ -12,8 +12,30 @@
 
 ---
 
+## I/O ports for each devices
+
+### GPS (USB)
+
+Default value: `/dev/ttyACM0`. Check in `/dev/` folder. Need to adjust it in `sensor/ublox/ublox_gps/config/zed_f9p.yaml` file (according to the default launch file).
+
+### Lidar (Ethernet)
+
+Default value: `eth0`. Check for the ethernet port name, type `ifconfig -a` or `ip a` in the terminal and identify the names of the ethernet port (normally `eth0`).
+
+After connecting the ethernet cable to the Lidar, type in `nmcli dev disconnect eth0` and `sudo ifconfig eth0 192.168.1.x netmask 255.255.255.0`. x is a number between 1 to 254, except 201, since the LIDAR's default static IP address is **192.168.1.201** (Do not change it). 
+
+To revert back to internet connection, type in `nmcli dev disconnect eth0` and `sudo dhclient -v eth0` with cable connected.
+
+---
+
 ## Launch
 
-`roslaunch sensor.launch`
+**Simply use `roslaunch sensor.launch`!**
+
+For development and modification purpose, the individual launch files can be modified. 
+
+GPS: `sensor/ublox/ublox_gps/launch/ublox_device.launch`
+
+Lidar: `sensor/velodyn/velodyne_pointcloud/launch/VLP16_points.launch`
 
 ---
