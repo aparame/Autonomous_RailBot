@@ -1,4 +1,4 @@
-# Individual installations
+# Individual Installations
 
 This is for development.
 
