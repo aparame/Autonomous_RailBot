@@ -16,7 +16,7 @@
 
 ### GPS (USB)
 
-Default value: `/dev/ttyACM0`. Check in `/dev/` folder. Need to adjust it in `sensor/ublox/ublox_gps/config/zed_f9p.yaml` file (according to the default launch file).
+Default value: `/dev/ttyACM0`. Check in `/dev/` folder in the OS. Need to adjust it in `sensor/ublox/ublox_gps/config/zed_f9p.yaml` file (according to the default launch file).
 
 ### Lidar (Ethernet)
 
