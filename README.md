@@ -14,6 +14,6 @@
 
 ## Launch
 
-'roslaunch sensor.launch'
+`roslaunch sensor.launch`
 
 ---
