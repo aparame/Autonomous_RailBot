@@ -1,5 +1,13 @@
 # RailBot ROS software repository
 
+## ROS melodic
+
+Since ROS melodic is used, the default python version should be python2, which means `/usr/bin/python` should point to `/usr/bin/python2` (or self installed python2).
+
+If not, please use `sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1` and `sudo update-alternatives --config python` to configure it.
+
+--
+
 ## Installation
 
 1. Put the `sensor` folder under the `src` in the catkin workspace directory
