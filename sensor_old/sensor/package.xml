@@ -20,14 +20,9 @@
 
 
 
-  <exec_depend>ublox_gps</exec_depend>
-  <exec_depend>ublox_msgs</exec_depend>
-  <exec_depend>ublox_serialization</exec_depend>
+  <exec_depend>ublox</exec_depend>
 
-  <exec_depend>velodyne_driver</exec_depend>
-  <exec_depend>velodyne_laserscan</exec_depend>
-  <exec_depend>velodyne_msgs</exec_depend>
-  <exec_depend>velodyne_pointcloud</exec_depend>
+  <exec_depend>velodyn</exec_depend>
 
 
 
