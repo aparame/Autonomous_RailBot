@@ -6,7 +6,7 @@
 
 2. **Intel® RealSense™ SDK 2.0**: a cross-platform library for Intel® RealSense™ depth cameras.
 
---
+---
 
 ## Installation
 
