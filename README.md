@@ -6,9 +6,9 @@
 
 2. **Intel® RealSense™ SDK 2.0**: a cross-platform library for Intel® RealSense™ depth cameras. More details are at [this link](https://github.com/IntelRealSense/librealsense).
 
-  1. sdfaas
+  2.1 sdfaas
   
-  3. sdafds
+  - sdafds
 
 ---
 
