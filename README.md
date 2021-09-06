@@ -5,8 +5,8 @@
 1. **Default Python version**: Since ROS melodic is used, the default python version should be python2, which means `/usr/bin/python` should point to `/usr/bin/python2` (or self installed python2). If not, please use `sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1` and `sudo update-alternatives --config python` to configure it.
 
 2. **Intel® RealSense™ SDK 2.0**: a cross-platform library for Intel® RealSense™ depth cameras. More details are at [this link](https://github.com/IntelRealSense/librealsense).
-  2.1 sdfaas
-  2.2 sdafds
+  1. sdfaas
+  2. sdafds
 
 ---
 
