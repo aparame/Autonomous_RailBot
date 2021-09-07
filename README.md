@@ -10,7 +10,7 @@
   
     2.2 sdafds
 
-3. **OpenCV library**: For Jetson users, the default opencv library location is different from what is defined in the ros camera build. Therefore, the following cammands are necessary.
+3. **OpenCV library**: For Jetson users, the default OpenCV library location is different from what is defined in the ros camera build. Therefore, the following cammands are necessary.
 
 ```
 sudo ln -s /usr/include/opencv4/opencv2/ /usr/include/opencv
