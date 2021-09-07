@@ -777,7 +777,7 @@ class UbloxFirmware7Plus : public UbloxFirmware {
     // NavSatFix message
     //
     static ros::Publisher fixPublisher =
-        nh->advertise<sensor_msgs::NavSatFix>("/sensor/gps/fix", kROSQueueSize);
+        nh->advertise<sensor_msgs::NavSatFix>("fix", kROSQueueSize);
 
     sensor_msgs::NavSatFix fix;
     fix.header.frame_id = frame_id;
@@ -833,7 +833,7 @@ class UbloxFirmware7Plus : public UbloxFirmware {
     // Twist message
     //
     static ros::Publisher velocityPublisher =
-        nh->advertise<geometry_msgs::TwistWithCovarianceStamped>("/sensor/gps/fix_velocity",
+        nh->advertise<geometry_msgs::TwistWithCovarianceStamped>("fix_velocity",
                                                                  kROSQueueSize);
     geometry_msgs::TwistWithCovarianceStamped velocity;
     velocity.header.stamp = fix.header.stamp;
