@@ -6,6 +6,10 @@
 
 2. **Intel® RealSense™ SDK 2.0**: A cross-platform library for Intel® RealSense™ depth cameras. More details are at [this link](https://github.com/IntelRealSense/librealsense).
 
+    Librealsense2 SDK supports two API (mutually-exclusive) for communication with RealSense device on Linux platforms:
+    1. Linux native kernel drivers for UVC, USB and HID (Video4Linux and IIO respectively)
+    2. Using `RSUSB` - user-space implementation of the UVC and HID data protocols, encapsulated and activated by selecting the SDK's `-DFORCE_RSUSB_BACKEND` flag (a.k.a. `-DFORCE_LIBUVC` with SDK versions prior to v.2.30).
+
     2.1 sdfaas
   
     2.2 sdafds
