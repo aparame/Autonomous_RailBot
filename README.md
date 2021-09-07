@@ -55,7 +55,7 @@ sudo ln -s /usr/include/opencv4/opencv2/ /usr/include/opencv2
 
 ### GPS (USB)
 
-Default value: `/dev/ttyACM0`. Check in `/dev/` folder in the OS. Need to adjust it in `sensor/ublox/ublox_gps/config/zed_f9p.yaml` file (according to the default launch file).
+Default value: `/dev/ttyACM0`. `sudo chmod 777 /dev/ttyACM0` command will be needed for the first time. Check in `/dev/` folder in the OS. Need to adjust it in `sensor/ublox/ublox_gps/config/zed_f9p.yaml` file (according to the default launch file).
 
 ### Lidar (Ethernet)
 
@@ -65,6 +65,9 @@ After connecting the ethernet cable to the Lidar, type in `nmcli dev disconnect 
 
 To revert back to internet connection, type in `nmcli dev disconnect eth0` and `sudo dhclient -v eth0` with cable connected.
 
+### Camera (USB)
+
+Default value: `/dev/ttyACM0`. Check in `/dev/` folder in the OS. Need to adjust it in the launch file in `sensor/realsense2_camera/launch/`.
 ---
 
 ## Launch
