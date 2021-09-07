@@ -13,6 +13,8 @@
     Choose one from below:
     
     2.1 Linux native kernel drivers
+    
+    Get the source code from the [librealsense repository](https://github.com/IntelRealSense/librealsense) and modify `patch-realsense-ubuntu-L4T.sh` according to the Jetson and L4T version.
 
     ```
     ./scripts/patch-realsense-ubuntu-L4T.sh  
