@@ -10,9 +10,11 @@
     1. Linux native kernel drivers for UVC, USB and HID (Video4Linux and IIO respectively)
     2. Using `RSUSB` - user-space implementation of the UVC and HID data protocols, encapsulated and activated by selecting the SDK's `-DFORCE_RSUSB_BACKEND` flag (a.k.a. `-DFORCE_LIBUVC` with SDK versions prior to v.2.30).
 
-    2.1 sdfaas
+    2.1 Linux native kernel drivers
   
-    2.2 sdafds
+    2.2 Using `RSUSB`
+
+    `sudo apt install ros-melodic-librealsense2`
 
 3. **OpenCV library**: For Jetson users, the default OpenCV library location is different from what is defined in the ros camera build. Therefore, the following cammands are necessary.
 
