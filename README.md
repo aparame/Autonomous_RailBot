@@ -11,6 +11,7 @@
     2. Using `RSUSB` - user-space implementation of the UVC and HID data protocols, encapsulated and activated by selecting the SDK's `-DFORCE_RSUSB_BACKEND` flag (a.k.a. `-DFORCE_LIBUVC` with SDK versions prior to v.2.30).
 
     Choose one from below:
+    
     2.1 Linux native kernel drivers
   
     2.2 Using `RSUSB`
