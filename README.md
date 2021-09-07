@@ -50,4 +50,6 @@ GPS: `sensor/ublox/ublox_gps/launch/ublox_device.launch`
 
 Lidar: `sensor/velodyn/velodyne_pointcloud/launch/VLP16_points.launch`
 
+Camera: ``
+
 ---
