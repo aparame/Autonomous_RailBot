@@ -4,12 +4,14 @@
 
 1. **Default Python version**: Since ROS melodic is used, the default python version should be python2, which means `/usr/bin/python` should point to `/usr/bin/python2` (or self installed python2). If not, please use `sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1` and `sudo update-alternatives --config python` to configure it.
 
-2. **Intel® RealSense™ SDK 2.0**: A cross-platform library for Intel® RealSense™ depth cameras. More details are at [this link](https://github.com/IntelRealSense/librealsense).
+2. **Intel® RealSense™ SDK 2.0**: A cross-platform library for Intel® RealSense™ depth cameras. More details are in [this link](https://github.com/IntelRealSense/librealsense).
 
-    Librealsense2 SDK supports two API (mutually-exclusive) for communication with RealSense device on Linux platforms:
+    For Jetson, Librealsense2 SDK supports two API (mutually-exclusive) for communication with RealSense device on Linux platforms:
     1. Linux native kernel drivers for UVC, USB and HID (Video4Linux and IIO respectively)
     2. Using `RSUSB` - user-space implementation of the UVC and HID data protocols, encapsulated and activated by selecting the SDK's `-DFORCE_RSUSB_BACKEND` flag (a.k.a. `-DFORCE_LIBUVC` with SDK versions prior to v.2.30).
-
+    
+    More details are [here](https://github.com/IntelRealSense/librealsense/blob/development/doc/installation_jetson.md).
+    
     Choose one from below:
     
     2.1 Linux native kernel drivers (Recommended but hard)
