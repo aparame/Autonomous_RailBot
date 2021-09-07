@@ -734,7 +734,7 @@ void UbloxFirmware6::callbackNavPosLlh(const ublox_msgs::NavPOSLLH& m) {
 
   // Position message
   static ros::Publisher fixPublisher =
-      nh->advertise<sensor_msgs::NavSatFix>("/sensor/gps/fix", kROSQueueSize);
+      nh->advertise<sensor_msgs::NavSatFix>("fix", kROSQueueSize);
   if (m.iTOW == last_nav_vel_.iTOW)
     fix_.header.stamp = velocity_.header.stamp; // use last timestamp
   else
@@ -777,7 +777,7 @@ void UbloxFirmware6::callbackNavVelNed(const ublox_msgs::NavVELNED& m) {
 
   // Example geometry message
   static ros::Publisher velocityPublisher =
-      nh->advertise<geometry_msgs::TwistWithCovarianceStamped>("/sensor/gps/fix_velocity",
+      nh->advertise<geometry_msgs::TwistWithCovarianceStamped>("fix_velocity",
                                                                 kROSQueueSize);
   if (m.iTOW == last_nav_pos_.iTOW)
     velocity_.header.stamp = fix_.header.stamp; // same time as last navposllh
