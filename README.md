@@ -12,7 +12,7 @@
 
     Choose one from below:
     
-    2.1 Linux native kernel drivers
+    2.1 Linux native kernel drivers (Recommended but hard)
     
     Get the source code from the [librealsense repository](https://github.com/IntelRealSense/librealsense) and modify `patch-realsense-ubuntu-L4T.sh` according to the Jetson and L4T version.
 
@@ -24,7 +24,7 @@
     cmake .. -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release -DFORCE_RSUSB_BACKEND=false -DBUILD_WITH_CUDA=true && make -j$(($(nproc)-1)) && sudo make install
     ```
   
-    2.2 Using `RSUSB`
+    2.2 Using `RSUSB` (Easy)
 
     `sudo apt install ros-melodic-librealsense2`
 
