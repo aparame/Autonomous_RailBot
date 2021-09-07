@@ -67,7 +67,8 @@ To revert back to internet connection, type in `nmcli dev disconnect eth0` and `
 
 ### Camera (USB)
 
-Default value: `/dev/ttyACM0`. Check in `/dev/` folder in the OS. Need to adjust it in the launch file in `sensor/realsense2_camera/launch/`.
+Check in `/dev/` folder in the OS. Need to adjust it in the launch file in `sensor/realsense2_camera/launch/`.
+
 ---
 
 ## Launch
