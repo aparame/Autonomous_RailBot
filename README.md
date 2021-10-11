@@ -65,6 +65,12 @@ After connecting the ethernet cable to the Lidar, type in `nmcli dev disconnect 
 
 To revert back to internet connection, type in `nmcli dev disconnect eth0` and `sudo dhclient -v eth0` with cable connected.
 
+The setting is configured in the Jetson Xavier ("Lidar" network), remember to enable "Use this connection only for resources on its network" under IPv4 routes setting when using Lidar and Wifi.
+
+### Wifi
+
+Manual IPv4 setting using IP address "192.168.1.152" (might need to change in the future), and set the netmask to **16**. 
+
 ### Camera (USB)
 
 Check in `/dev/` folder in the file system. Need to adjust it in the launch file in `sensor/realsense2_camera/launch/`. The S/N for one of the cameras is 115422250478.
