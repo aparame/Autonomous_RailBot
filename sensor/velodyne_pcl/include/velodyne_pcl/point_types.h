@@ -1,4 +1,4 @@
-// Copyright (C) 2018, 2019 Kevin Hallenbeck, Joshua Whitley
+// Copyright (C) 2012 - 2020 Austin Robot Technology, Jesse Vera, Jack O'Quin, Piyush Khandelwal, Joshua Whitley, Sebastian Pütz  // NOLINT
 // All rights reserved.
 //
 // Software License Agreement (BSD License 2.0)
@@ -30,20 +30,40 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <ros/ros.h>
-#include "velodyne_laserscan/velodyne_laserscan.h"
+/** \file
+ *
+ *  Point Cloud Library point structures for Velodyne data.
+ *
+ *  @author Jesse Vera
+ *  @author Jack O'Quin
+ *  @author Piyush Khandelwal
+ *  @author Sebastian Pütz
+ */
 
-int main(int argc, char** argv)
+#ifndef VELODYNE_PCL_POINT_TYPES_H
+#define VELODYNE_PCL_POINT_TYPES_H
+
+#include <pcl/point_types.h>
+
+namespace velodyne_pcl
 {
-  ros::init(argc, argv, "velodyne_laserscan_node");
-  ros::NodeHandle nh;
-  ros::NodeHandle nh_priv("~");
-
-  // create VelodyneLaserScan class
-  velodyne_laserscan::VelodyneLaserScan n(nh, nh_priv);
-
-  // handle callbacks until shut down
-  ros::spin();
-
-  return 0;
+struct PointXYZIRT
+{
+  PCL_ADD_POINT4D;                    // quad-word XYZ
+  float    intensity;                 ///< laser intensity reading
+  uint16_t ring;                      ///< laser ring number
+  float    time;                      ///< laser time reading
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW     // ensure proper alignment
 }
+EIGEN_ALIGN16;
+}  // namespace velodyne_pcl
+
+POINT_CLOUD_REGISTER_POINT_STRUCT(velodyne_pcl::PointXYZIRT,
+                                  (float, x, x)
+                                  (float, y, y)
+                                  (float, z, z)
+                                  (float, intensity, intensity)
+                                  (uint16_t, ring, ring)
+                                  (float, time, time))
+
+#endif  // VELODYNE_PCL_POINT_TYPES_H
