@@ -15,7 +15,6 @@ The LIDAR is also called as the [Velodyne Puck](https://velodynelidar.com/produc
 The original driver is in [this link](http://wiki.ros.org/velodyne).
 
 ### Visualization
-* You would need to start rviz by typing
 `rosrun rviz rviz -f velodyne`
 
 
