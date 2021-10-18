@@ -3,4 +3,4 @@ These files are to be uploaded to the receiver and transmitter for the LORA tran
 
 **Please note** :-
 
-This simply the first commit, things will modified soon
+This is simply the first commit, things will modified soon
