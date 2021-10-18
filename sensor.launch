@@ -4,13 +4,15 @@
 
   </include>
 
-  
-  
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
 
   </include>
   
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+                 
+  </include>
+  
+  <include file="$(find razor_imu_9dof)/launch/razor-pub.launch">
                  
   </include>
 
