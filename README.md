@@ -87,6 +87,8 @@ GPS: `sensor/ublox/ublox_gps/launch/ublox_device.launch`
 
 Lidar: `sensor/velodyn/velodyne_pointcloud/launch/VLP16_points.launch`
 
-Camera: `sensor/realsense2_camera/launch/rs_camera.launch` and `sensor/realsense2_camera/launch/rs_multiple_devices.launch` for multiple cameras.
+Camera: `sensor/realsense2_camera/launch/rs_camera.launch` and `sensor/realsense2_camera/launch/rs_multiple_devices.launch` for multiple cameras
+
+IMU: `sensor/razor_imu_9dof/launch/razor-pub.launch` and `sensor/razor_imu_9dof/launch/razor-pub-diags.launch` with diagnostics
 
 ---
