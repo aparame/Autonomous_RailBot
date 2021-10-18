@@ -47,7 +47,7 @@ The driver was originally from [this link](http://wiki.ros.org/realsense_camera)
 
 ## Razor IMU
 
-The Razor inertial measurement unit (IMU) is of 9 degree freedom
+The Razor inertial measurement unit (IMU) from Sparkfun is of 9 degree freedom
 
 ### Source
 
