@@ -10,13 +10,7 @@ For technical specifications, please refer to the Datasheet at [this link](https
 The LIDAR will be used for object detection and autonomous driving alongside the Intel RealSense cameras
 The LIDAR is also called as the [Velodyne Puck](https://velodynelidar.com/products/puck/).
 
-### Pre requisites
-
-Before we start using this LIDAR, please note that the following steps have been tried and tested successfully on the below systems:
-1) Ubuntu 16 and above on a Linux Machine
-2) Jetson Nano and Xavier NX with Jetpack 4.5+
-
-### Installation
+### Source
 
 The original driver is in [this link](http://wiki.ros.org/velodyne).
 
@@ -33,26 +27,10 @@ The ROS setup for GPS module (firmware version 9) ([SparkFun GPS-RTK2 Board - ZE
 
 Potential GPS module for future use: [SparkFun GPS-RTK Dead Reckoning Breakout - ZED-F9R (Qwiic)](https://www.sparkfun.com/products/16344), which has a 3D IMU sensor.
 
-The driver was originally from [this link](https://github.com/KumarRobotics/ublox).
-
 Modification has been made to meet our project purpose.
 
 
-### Installation
+### Source
 
-Put the `src` folder under the catkin workspace directory, then use `catkin_make` when in the workspace directory. For development purpose (without `catkin_make install`), remember to use command `source <workspace_path>/devel/setup.bash` or `source <workspace_path>/devel/setup.zsh`.
+The driver was originally from [this link](https://github.com/KumarRobotics/ublox).
 
-
-### Launch
-
-A sample launch file `ublox_device.launch` in the `launch` folder loads the parameters from a `zed_f9p.yaml` file in the same folder. Example command: `roslaunch ublox_device.launch`.
-
-
-### Misc
-
-- On Ubuntu VM, to run the launch file, `chmod` has to be used to change the access permission of the device file. Example command: `sudo chmod 777 /dev/ttyACM0`.
-
-
-### Change history
-
-2021/08/11 Tested on Ubuntu VM
