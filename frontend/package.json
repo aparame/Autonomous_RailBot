@@ -1,0 +1,14 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "Railbot Front-end launcher",
+  "main": "dashserve.js",
+  "scripts": {
+    "test": "node dashserve.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
