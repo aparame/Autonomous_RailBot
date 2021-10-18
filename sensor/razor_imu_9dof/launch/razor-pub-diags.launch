@@ -1,4 +1,5 @@
 <launch>
+  <group ns="sensor/imu">
     <arg name="razor_config_file" default="/home/railbot/MATLAB_test/src/razor_imu_9dof/config/my_razor.yaml"/>
     <node pkg="razor_imu_9dof" type="imu_node.py" name="imu_node" output="screen">
         <rosparam file="$(arg razor_config_file)" command="load"/>
@@ -9,4 +10,5 @@
     </node>
 
     <node pkg="rqt_robot_monitor" type="rqt_robot_monitor" name="rqt_robot_monitor" />
+  </group>
 </launch>
