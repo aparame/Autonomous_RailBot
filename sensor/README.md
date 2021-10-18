@@ -29,8 +29,28 @@ Potential GPS module for future use: [SparkFun GPS-RTK Dead Reckoning Breakout -
 
 Modification has been made to meet our project purpose.
 
-
 ### Source
 
 The driver was originally from [this link](https://github.com/KumarRobotics/ublox).
+
+---
+
+## Intel Realsense Depth Camera
+
+The Intel Realsense Depth Camera is [model D455](https://www.intelrealsense.com/depth-camera-d455/). 
+
+### Source
+
+The library for this camera is in [this link](http://wiki.ros.org/RealSense).
+The driver was originally from [this link](http://wiki.ros.org/realsense_camera).
+
+---
+
+## Razor IMU
+
+The Razor inertial measurement unit (IMU) is of 9 degree freedom
+
+### Source
+
+The driver was originally from [this link](http://wiki.ros.org/razor_imu_9dof).
 
