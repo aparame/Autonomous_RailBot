@@ -13,7 +13,7 @@ world_frame: odom
 
 transform_time_offset: 0.0
 
-imu0: /imu
+imu0: /sensor/imu
 imu0_differential: false
 imu0_relative: true
 imu0_queue_size: 10

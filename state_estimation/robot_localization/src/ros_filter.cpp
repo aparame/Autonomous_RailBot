@@ -1329,7 +1329,7 @@ namespace RobotLocalization
     do
     {
       std::stringstream ss;
-      ss << "/sensor/imu" << topicInd++;
+      ss << "imu" << topicInd++;
       std::string imuTopicName = ss.str();
       moreParams = nhLocal_.hasParam(imuTopicName);
 

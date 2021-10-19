@@ -28,6 +28,7 @@
   <exec_depend>velodyne_laserscan</exec_depend>
   <exec_depend>velodyne_msgs</exec_depend>
   <exec_depend>velodyne_pointcloud</exec_depend>
+  <exec_depend>velodyne_detection</exec_depend>
 
   <exec_depend>realsense2_camera</exec_depend>
   <exec_depend>razor_imu_9dof</exec_depend>

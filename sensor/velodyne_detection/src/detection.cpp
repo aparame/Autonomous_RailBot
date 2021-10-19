@@ -676,7 +676,7 @@ void cloud_cb(const sensor_msgs::PointCloud2ConstPtr &input)
 
 int main(int argc, char **argv) {
   // ROS init
-  ros::init(argc, argv, "lidar_detection");
+  ros::init(argc, argv, "velodyne_detection");
   ros::NodeHandle nh;
 
   // Publishers to publish the state of the objects (pos and vel)
@@ -685,22 +685,22 @@ int main(int argc, char **argv) {
   cout << "About to setup callback\n";
 
   // Create a ROS subscriber for the input point cloud
-  ros::Subscriber sub = nh.subscribe("/sensor/lidar/velodyne_points", 1, cloud_cb);
+  ros::Subscriber sub = nh.subscribe("velodyne_points", 1, cloud_cb);
   // Create a ROS publisher for the output point cloud
-  pub_cluster0 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_0", 1);
-  pub_cluster1 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_1", 1);
-  pub_cluster2 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_2", 1);
-  pub_cluster3 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_3", 1);
-  pub_cluster4 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_4", 1);
-  pub_cluster5 = nh.advertise<sensor_msgs::PointCloud2>("/sensor/lidar/obstacles/cluster_5", 1);
+  pub_cluster0 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_0", 1);
+  pub_cluster1 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_1", 1);
+  pub_cluster2 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_2", 1);
+  pub_cluster3 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_3", 1);
+  pub_cluster4 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_4", 1);
+  pub_cluster5 = nh.advertise<sensor_msgs::PointCloud2>("obstacles/cluster_5", 1);
   // Subscribe to the clustered pointclouds
   // ros::Subscriber c1=nh.subscribe("ccs",100,KFT);
-  objID_pub = nh.advertise<std_msgs::Int32MultiArray>("/sensor/lidar/obstacles/obj_id", 1);
+  objID_pub = nh.advertise<std_msgs::Int32MultiArray>("obstacles/obj_id", 1);
   /* Point cloud clustering
    */
 
   // cc_pos=nh.advertise<std_msgs::Float32MultiArray>("ccs",100);//clusterCenter1
-  markerPub = nh.advertise<visualization_msgs::MarkerArray>("/sensor/lidar/obstacles/viz", 1);
+  markerPub = nh.advertise<visualization_msgs::MarkerArray>("obstacles/viz", 1);
 
   /* Point cloud clustering
    */
