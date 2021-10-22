@@ -1,0 +1,7 @@
+#GPS configuration
+
+magnetic_declination_radians: 0
+
+yaw_offset: 0
+
+
