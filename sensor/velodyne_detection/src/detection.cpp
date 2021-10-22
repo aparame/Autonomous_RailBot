@@ -48,6 +48,9 @@ namespace velodyne_detection
     private_nh.param("angle_offset", config_.angle_offset, 0.0);
     private_nh.param("track_width", config_.track_width, 1.524);
     private_nh.param("safe_pad", config_.safe_pad, 0.1524);
+    private_nh.param("ClusterTolerance", config_.ClusterTolerance, 0.3);
+    private_nh.param("MinClusterSize", config_.MinClusterSize, 10);
+    private_nh.param("MaxClusterSize", config_.MaxClusterSize, 600);
 
     srv_ = boost::make_shared<dynamic_reconfigure::Server<velodyne_detection::
     DetectionNodeConfig> > (private_nh);
@@ -392,9 +395,9 @@ namespace velodyne_detection
 
       std::vector<pcl::PointIndices> cluster_indices;
       pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-      ec.setClusterTolerance(0.08);
-      ec.setMinClusterSize(10);
-      ec.setMaxClusterSize(600);
+      ec.setClusterTolerance(config_.ClusterTolerance);
+      ec.setMinClusterSize(config_.MinClusterSize);
+      ec.setMaxClusterSize(config_.MaxClusterSize);
       ec.setSearchMethod(tree);
       ec.setInputCloud(input_cloud);
       /* Extract the clusters out of pc and save indices in cluster_indices.*/
@@ -534,9 +537,9 @@ namespace velodyne_detection
       */
       std::vector<pcl::PointIndices> cluster_indices;
       pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-      ec.setClusterTolerance(0.3);
-      ec.setMinClusterSize(10);
-      ec.setMaxClusterSize(600);
+      ec.setClusterTolerance(config_.ClusterTolerance);
+      ec.setMinClusterSize(config_.MinClusterSize);
+      ec.setMaxClusterSize(config_.MaxClusterSize);
       ec.setSearchMethod(tree);
       ec.setInputCloud(input_cloud);
       // cout<<"PCL init successfull\n";
@@ -604,11 +607,11 @@ namespace velodyne_detection
 
       mission_stop.data = false;
       for (int ii=0; ii < 6; ii++){
-        if (distances[index] < 3.0 && distances[index] >= 0.0) {
+        if (distances[ii] < 3.0 && distances[ii] >= 0.0) {
           mission_stop.data = true;
         }
-        else if (distances[index] > 10.0){
-          distances[index] = max_range;
+        else if (distances[ii] > 10.0){
+          // distances[ii] = max_range;
         } else {
 
         }

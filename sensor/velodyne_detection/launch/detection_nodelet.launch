@@ -3,6 +3,9 @@
   <arg name="angle_offset" default="0.0" />
   <arg name="track_width" default="1.524" />
   <arg name="safe_pad" default="0.1524" />
+  <arg name="ClusterTolerance" default="0.3" />
+  <arg name="MinClusterSize" default="10" />
+  <arg name="MaxClusterSize" default="600" />
   <arg name="manager" default="velodyne_nodelet_manager" />
   <node pkg="nodelet" type="nodelet" name="$(arg manager)_detection"
         args="load velodyne_detection/DetectionNodelet $(arg manager)" >
@@ -10,5 +13,8 @@
     <param name="angle_offset" value="$(arg angle_offset)"/>
     <param name="track_width" value="$(arg track_width)"/>
     <param name="safe_pad" value="$(arg safe_pad)"/>
+    <param name="ClusterTolerance" value="$(arg ClusterTolerance)"/>
+    <param name="MinClusterSize" value="$(arg MinClusterSize)"/>
+    <param name="MaxClusterSize" value="$(arg MaxClusterSize)"/>
   </node>
 </launch>

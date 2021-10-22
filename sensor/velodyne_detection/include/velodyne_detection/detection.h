@@ -106,6 +106,9 @@ namespace velodyne_detection
       double angle_offset;       ///< difference between lidar 0' direction and track direction in radians
       double track_width;        ///< width of track in meters
       double safe_pad;         ///< safe padding width in meters
+      double ClusterTolerance;
+      int MinClusterSize;
+      int MaxClusterSize;
     }
     Config;
     Config config_;
