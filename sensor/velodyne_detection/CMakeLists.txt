@@ -30,26 +30,6 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME}
-  src/detection.cpp
-  src/detection_nodelet.cpp
-)
-
-add_dependencies(${PROJECT_NAME}
-  ${PROJECT_NAME}_gencfg
-)
-
-add_executable( ${PROJECT_NAME}_node 
-  src/detection_node.cpp 
-)
-
-target_link_libraries ( ${PROJECT_NAME}_node 
-  ${OpenCV_LIBRARIES} 
-  ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
-  ${PROJECT_NAME}
-)
-
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 install(FILES nodelets.xml
@@ -57,15 +37,49 @@ install(FILES nodelets.xml
 install(DIRECTORY launch/
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch)
 
+add_executable( ${PROJECT_NAME}_node
+  src/detection.cpp
+  src/detection_node.cpp
+)
+
+add_dependencies(${PROJECT_NAME}_node
+  ${PROJECT_NAME}_gencfg
+)
+
+target_link_libraries ( ${PROJECT_NAME}_node
+  ${OpenCV_LIBRARIES}
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+#   ${PROJECT_NAME}
+)
+
+add_library(${PROJECT_NAME}_nodelet
+  src/detection.cpp
+  src/detection_nodelet.cpp
+)
+
+add_dependencies(${PROJECT_NAME}_nodelet
+  ${PROJECT_NAME}_gencfg
+)
+
+target_link_libraries(${PROJECT_NAME}_nodelet
+  ${OpenCV_LIBRARIES}
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+#  ${PROJECT_NAME}
+)
+
+
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
+install(TARGETS ${PROJECT_NAME}_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  COMPONENT main
 )
 
-# install(FILES nodelets.xml
-#         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+install(TARGETS ${PROJECT_NAME}_nodelet
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
 
 roslint_cpp()

@@ -1,4 +1,6 @@
-<library path="lib/libdetection_nodelet">
+
+
+<library path="libvelodyne_detection_nodelet">
   <class name="velodyne_detection/DetectionNodelet"
          type="velodyne_detection::DetectionNodelet"
          base_class_type="nodelet::Nodelet">
