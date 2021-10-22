@@ -3,6 +3,7 @@
   <arg name="angle_offset" default="0.0" />
   <arg name="track_width" default="1.524" />
   <arg name="safe_pad" default="0.1524" />
+  <arg name="manager" default="velodyne_nodelet_manager" />
   <node pkg="nodelet" type="nodelet" name="$(arg manager)_detection"
         args="load velodyne_detection/DetectionNodelet $(arg manager)" >
     <param name="frame_id" value="$(arg frame_id)"/>
