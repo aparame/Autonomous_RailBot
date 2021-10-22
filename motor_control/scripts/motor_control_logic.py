@@ -4,8 +4,12 @@ import rospy, math, numpy as np
 
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
+from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
 
+float target
+bool mission
+global cmd_finish
 
 rospy.init.node('motor_control', anonymous=True)
 
@@ -23,7 +27,7 @@ class VelocityPublisher(): #velocity publisher
         self.cmd_vel.publish(msg)
 
 
-class Odometryreader():
+class OdometryReader():
     def __init__(self, topic):
         self.pose = {}
         self.trajectory = []
@@ -40,9 +44,22 @@ class Odometryreader():
         self.subscriber = rospy.Subscriber(self.topic, Odometry, self.callback)
         rospy.sleep(0.1)
 
-    def unregister(self): #saving the trajectory of the railpbot 
+    def unregister(self): #saving the trajectory of the railbot 
         np.save('Trajectory',self.trajectory)
         self.subscriber.unregister()
+
+class TrajectoryTargeter():
+    def __init__(self, topic):
+	self.direction = {}
+	self.topic = topic
+	self.subscribe()
+
+    def callback(self, target):
+	self.direction = target
+	
+    def subscribe(self): #trajectory subscriber
+	self.subscriber = rospy.Subscriber(topic, trajectory, self.callback)
+	rospy.sleep(0.1)	
 
 k_rho = 0.1 #feedback gain
 
@@ -57,20 +74,26 @@ def go_to_next_way_point(cmd_x, cmd_y, constant_vel = None):
             v = v * constant_vel / abs(v)
         velcoity.move(v)
         rospy.sleep(0.1)
-         
+    cmd_finish = False 
+    cmd_done_pub = rospy.Publisher('/cmd_done',String,queue_size=10)
+    cmd_done_pub.publish("Command Completed")
+    if(rho <= 0.01):
+        cmd_finish = True
+        
 
 velcoity = VelocityPublisher('/cmd_vel')
 odometry = Odometryreader('/state_estimations/odometry')
 
 #sample inputs in meters 
-x = 2
-y = 0  # will be input from Dr. Mithuna mission planning code
+x = target
+y = 0
 
-go_to_next_way_point(x,y,constant_vel=0.2)
+while (mission)
+    if(cmd_finish):
+        cmd_finish = False
+        go_to_next_way_point(x,y,constant_vel=0.2)
 
 velcoity.move(0,0)
 odometry.unregister()
 
 # error = differential GPS coords 
-
-
