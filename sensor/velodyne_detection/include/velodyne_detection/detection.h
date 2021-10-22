@@ -81,7 +81,7 @@ namespace velodyne_detection
     trackinfo;
 
     trackinfo ontrack(float x, float y);
-    void inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud);
+    void inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &ros_cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud);
 
     std::pair<int, int> findIndexOfMin(std::vector<std::vector<float>> distMat);
 

@@ -110,17 +110,17 @@ namespace velodyne_detection
     return trackinfo;
   }
 
-  void Detection::inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud) {
+  void Detection::inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &ros_cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud) {
     // std::vector<int>::const_iterator pit;
     pcl::PointCloud<pcl::PointXYZ>::iterator pit;
     float r_angle;
     float theta = config_.angle_offset/180.0*3.14159;
-    for (pit = input_cloud->begin(); pit != input_cloud->end(); pit++) {
+    for (pit = ros_cloud->begin(); pit != ros_cloud->end(); pit++) {
       float x0 = pit->x;
       float y0 = pit->y;
       r_angle = acosf( (x0*cosf(theta) + y0*sinf(theta))/sqrt(x0*x0+y0*y0));
-      if (abs(r_angle) > 0.5*config_.FieldOfView)
-        input_cloud->erase(pit);
+      if (r_angle*180.0/3.14159 < 0.5*config_.FieldOfView)
+        input_cloud->points.push_back(pcl::PointXYZ(pit->x, pit->y, pit->z));
     }
   }
 
@@ -398,14 +398,15 @@ namespace velodyne_detection
       // Process the point cloud
       pcl::PointCloud<pcl::PointXYZ>::Ptr input_cloud(
           new pcl::PointCloud<pcl::PointXYZ>);
-      pcl::PointCloud<pcl::PointXYZ>::Ptr clustered_cloud(
+      pcl::PointCloud<pcl::PointXYZ>::Ptr ros_cloud(
           new pcl::PointCloud<pcl::PointXYZ>);
       /* Creating the KdTree from input point cloud*/
       pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
           new pcl::search::KdTree<pcl::PointXYZ>);
 
-      pcl::fromROSMsg(*input, *input_cloud);
-      inFieldOfView(input_cloud);
+      pcl::fromROSMsg(*input, *ros_cloud);
+
+      inFieldOfView(ros_cloud, input_cloud);
 
       tree->setInputCloud(input_cloud);
 
@@ -535,14 +536,15 @@ namespace velodyne_detection
       // cout<<"ELSE firstFrame="<<firstFrame<<"\n";
       pcl::PointCloud<pcl::PointXYZ>::Ptr input_cloud(
           new pcl::PointCloud<pcl::PointXYZ>);
-      pcl::PointCloud<pcl::PointXYZ>::Ptr clustered_cloud(
+      pcl::PointCloud<pcl::PointXYZ>::Ptr ros_cloud(
           new pcl::PointCloud<pcl::PointXYZ>);
       /* Creating the KdTree from input point cloud*/
       pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
           new pcl::search::KdTree<pcl::PointXYZ>);
 
-      pcl::fromROSMsg(*input, *input_cloud);
-      inFieldOfView(input_cloud);
+      pcl::fromROSMsg(*input, *ros_cloud);
+
+      inFieldOfView(ros_cloud, input_cloud);
 
       tree->setInputCloud(input_cloud);
 
