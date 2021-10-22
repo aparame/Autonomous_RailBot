@@ -1,0 +1,10 @@
+<library path="lib/libdetection_nodelet">
+  <class name="velodyne_detection/DetectionNodelet"
+         type="velodyne_detection::DetectionNodelet"
+         base_class_type="nodelet::Nodelet">
+    <description>
+      Extract a single ring from a Velodyne PointCloud2 and publish
+      as a LaserScan.
+    </description>
+  </class>
+</library>

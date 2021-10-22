@@ -6,26 +6,66 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   roscpp
+  nodelet
   sensor_msgs
+  dynamic_reconfigure
+  roslint
 )
 find_package( OpenCV REQUIRED )
+find_package (PCL 1.8 REQUIRED)
+find_package(Eigen3 REQUIRED)
 
-catkin_package(
+generate_dynamic_reconfigure_options(
+  cfg/DetectionNode.cfg
+)
 
+catkin_package(CATKIN_DEPENDS
+  sensor_msgs
 )
 
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
 
-add_executable( velodyne_detection src/detection.cpp )
-target_link_libraries ( velodyne_detection ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
+add_library(${PROJECT_NAME}
+  src/detection.cpp
+  src/detection_nodelet.cpp
+)
+
+add_dependencies(${PROJECT_NAME}
+  ${PROJECT_NAME}_gencfg
+)
+
+add_executable( ${PROJECT_NAME}_node 
+  src/detection_node.cpp 
+)
+
+target_link_libraries ( ${PROJECT_NAME}_node 
+  ${OpenCV_LIBRARIES} 
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${PROJECT_NAME}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+install(FILES nodelets.xml
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(DIRECTORY launch/
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch)
 
 ## Mark executables and/or libraries for installation
-install(TARGETS velodyne_detection
+install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
+# install(FILES nodelets.xml
+#         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
+
+roslint_cpp()

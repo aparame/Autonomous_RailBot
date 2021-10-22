@@ -25,7 +25,7 @@
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->
   <!-- Example: -->
-  <author email="praveen.palanisamy@outlook.com">Praveen Palanisamy</author> -->
+  <author email="praveen.palanisamy@outlook.com">Praveen Palanisamy</author>
 
 
   <!-- The *_depend tags are used to specify dependencies -->
@@ -47,6 +47,8 @@
   <build_depend>libpcl-all-dev</build_depend>
   <build_depend>cv_bridge</build_depend>
 
+  <run_depend>nodelet</run_depend>
+  <!-- run_depend>dynamic_reconfigure</depend -->
   <run_depend>libpcl-all</run_depend>
   <run_depend>pcl_ros</run_depend>
   <run_depend>roscpp</run_depend>

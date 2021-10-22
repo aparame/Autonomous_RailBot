@@ -60,5 +60,11 @@
       <arg name="ring" value="$(arg laserscan_ring)"/>
       <arg name="resolution" value="$(arg laserscan_resolution)"/>
     </include>
+
+    <!-- start detection nodelet -->
+    <include file="$(find velodyne_detection)/launch/detection_nodelet.launch">
+      <arg name="frame_id" value="$(arg frame_id)"/>
+    </include>
+
   </group>
 </launch>

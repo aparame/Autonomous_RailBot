@@ -1,0 +1,12 @@
+<launch>
+  <arg name="frame_id" default="velodyne" />
+  <arg name="angle_offset" default="0.0" />
+  <arg name="track_width" default="1.524" />
+  <arg name="safe_pad" default="0.1524" />
+  <node pkg="velodyne_detection" type="velodyne_detection_node" name="velodyne_detection_node" >
+    <param name="frame_id" value="$(arg frame_id)"/>
+    <param name="angle_offset" value="$(arg angle_offset)"/>
+    <param name="track_width" value="$(arg track_width)"/>
+    <param name="safe_pad" value="$(arg safe_pad)"/>
+  </node>
+</launch>
