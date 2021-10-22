@@ -12,8 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   roslint
 )
 find_package( OpenCV REQUIRED )
-find_package (PCL 1.8 REQUIRED)
-find_package(Eigen3 REQUIRED)
+# find_package (PCL 1.8 REQUIRED)
+# find_package(Eigen3 REQUIRED)
 
 generate_dynamic_reconfigure_options(
   cfg/DetectionNode.cfg
@@ -27,7 +27,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
-  ${PCL_INCLUDE_DIRS}
+  # ${PCL_INCLUDE_DIRS}
 )
 
 install(DIRECTORY include/${PROJECT_NAME}/
@@ -49,7 +49,7 @@ add_dependencies(${PROJECT_NAME}_node
 target_link_libraries ( ${PROJECT_NAME}_node
   ${OpenCV_LIBRARIES}
   ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
+#   ${PCL_LIBRARIES}
 #   ${PROJECT_NAME}
 )
 
@@ -65,7 +65,7 @@ add_dependencies(${PROJECT_NAME}_nodelet
 target_link_libraries(${PROJECT_NAME}_nodelet
   ${OpenCV_LIBRARIES}
   ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
+#  ${PCL_LIBRARIES}
 #  ${PROJECT_NAME}
 )
 

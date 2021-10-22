@@ -86,7 +86,24 @@ namespace velodyne_detection
     // cc_pos=nh.advertise<std_msgs::Float32MultiArray>("ccs",100);//clusterCenter1
     markerPub = node.advertise<visualization_msgs::MarkerArray>("obstacles/viz", 1);
 
+    obstacle = node.advertise<std_msgs::Bool>("obstacle", 1);
+
+    obstacle_distances = node.advertise<std_msgs::Float32MultiArray>("obstacle_distances", 1);
+
     velodyne_points = node.subscribe("velodyne_points", 1, &Detection::cloud_cb, this);
+  }
+
+  Detection::trackinfo Detection::ontrack(float x, float y) {
+    bool ontrack = false;
+    float width = config_.safe_pad + 0.5 * config_.track_width;
+    float r_angle = - config_.angle_offset;
+    float x1 = x * cosf(r_angle) - y * sinf(r_angle);
+    float y1 = x * sinf(r_angle) + y * cosf(r_angle);
+    if (x1 > 0.0 && abs(y1) <= width) ontrack = true;
+    Detection::trackinfo trackinfo;
+    trackinfo.ontrack = ontrack;
+    trackinfo.distance = x1;
+    return trackinfo;
   }
 
   // calculate euclidean distance of two points
@@ -542,25 +559,37 @@ namespace velodyne_detection
       // Cluster centroids
       std::vector<pcl::PointXYZ> clusterCentroids;
 
+      distances = {max_range, max_range, max_range, max_range, max_range, max_range};
+      int index = 0;
       for (it = cluster_indices.begin(); it != cluster_indices.end(); ++it) {
         float x = 0.0;
         float y = 0.0;
         int numPts = 0;
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster(
             new pcl::PointCloud<pcl::PointXYZ>);
+        float distance_min = max_range;
         for (pit = it->indices.begin(); pit != it->indices.end(); pit++) {
 
           cloud_cluster->points.push_back(input_cloud->points[*pit]);
 
-          x += input_cloud->points[*pit].x;
-          y += input_cloud->points[*pit].y;
+          float x0 = input_cloud->points[*pit].x;
+          float y0 = input_cloud->points[*pit].y;
+          x += x0;
+          y += y0;
           numPts++;
 
+          trackinfo local_trackinfo = ontrack(x0, y0);
+          if (local_trackinfo.ontrack == true && local_trackinfo.distance < distance_min) {
+            distance_min = local_trackinfo.distance;
+          }
           // dist_this_point = pcl::geometry::distance(input_cloud->points[*pit],
           //                                          origin);
           // mindist_this_cluster = std::min(dist_this_point,
           // mindist_this_cluster);
         }
+
+        distances[index] = distance_min;
+        index++;
 
         pcl::PointXYZ centroid;
         centroid.x = x / numPts;
@@ -572,6 +601,23 @@ namespace velodyne_detection
         // Get the centroid of the cluster
         clusterCentroids.push_back(centroid);
       }
+
+      mission_stop.data = false;
+      for (int ii=0; ii < 6; ii++){
+        if (distances[index] < 3.0 && distances[index] >= 0.0) {
+          mission_stop.data = true;
+        }
+        else if (distances[index] > 10.0){
+          distances[index] = max_range;
+        } else {
+
+        }
+      }
+      std_msgs::Float32MultiArray msg;
+      msg.data = {distances[0],distances[1],distances[2],distances[3],distances[4],distances[5]};
+      obstacle.publish(mission_stop);
+      obstacle_distances.publish(msg);
+
       // cout<<"cluster_vec got some clusters\n";
 
       // Ensure at least 6 clusters exist to publish (later clusters may be empty)
@@ -653,7 +699,10 @@ namespace velodyne_detection
             break;
         }
       }
+
+
     }
+
   }
 
   void Detection::reconfigure_callback(

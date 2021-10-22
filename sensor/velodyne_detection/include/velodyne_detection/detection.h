@@ -3,7 +3,9 @@
 
 #include <string>
 #include <ros/ros.h>
+#include <math.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <std_msgs/Bool.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/Int32MultiArray.h>
 #include <pcl/pcl_base.h>
@@ -56,6 +58,9 @@ namespace velodyne_detection
 
     std::vector<geometry_msgs::Point> prevClusterCenters;
 
+    float max_range = 999.999; // in meters
+    std::array<float, 6> distances;
+    std_msgs::Bool mission_stop;
 
     // Callback for dynamic reconfigure
     void reconfigure_callback(velodyne_detection::DetectionNodeConfig &config,
@@ -67,6 +72,15 @@ namespace velodyne_detection
                    pcl::PointCloud<pcl::PointXYZ>::Ptr cluster);
 
     double euclidean_distance(geometry_msgs::Point &p1, geometry_msgs::Point &p2);
+
+    typedef struct
+    {
+      bool ontrack;
+      float distance;
+    }
+    trackinfo;
+
+    trackinfo ontrack(float x, float y);
 
     std::pair<int, int> findIndexOfMin(std::vector<std::vector<float>> distMat);
 
@@ -83,6 +97,7 @@ namespace velodyne_detection
     ros::NodeHandle private_nh;
     ros::Subscriber velodyne_points;
     ros::Publisher obstacle;
+    ros::Publisher obstacle_distances;
 
     /// configuration parameters
     typedef struct
