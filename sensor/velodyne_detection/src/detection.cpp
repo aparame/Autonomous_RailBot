@@ -51,6 +51,7 @@ namespace velodyne_detection
     private_nh.param("ClusterTolerance", config_.ClusterTolerance, 0.3);
     private_nh.param("MinClusterSize", config_.MinClusterSize, 10);
     private_nh.param("MaxClusterSize", config_.MaxClusterSize, 600);
+    private_nh.param("FieldOfView", config_.FieldOfView, 120.0);
 
     srv_ = boost::make_shared<dynamic_reconfigure::Server<velodyne_detection::
     DetectionNodeConfig> > (private_nh);
@@ -99,7 +100,7 @@ namespace velodyne_detection
   Detection::trackinfo Detection::ontrack(float x, float y) {
     bool ontrack = false;
     float width = config_.safe_pad + 0.5 * config_.track_width;
-    float r_angle = - config_.angle_offset;
+    float r_angle = - config_.angle_offset/180.0*3.14159;
     float x1 = x * cosf(r_angle) - y * sinf(r_angle);
     float y1 = x * sinf(r_angle) + y * cosf(r_angle);
     if (x1 > 0.0 && abs(y1) <= width) ontrack = true;
@@ -107,6 +108,20 @@ namespace velodyne_detection
     trackinfo.ontrack = ontrack;
     trackinfo.distance = x1;
     return trackinfo;
+  }
+
+  void Detection::inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud) {
+    // std::vector<int>::const_iterator pit;
+    pcl::PointCloud<pcl::PointXYZ>::iterator pit;
+    float r_angle;
+    float theta = config_.angle_offset/180.0*3.14159;
+    for (pit = input_cloud->begin(); pit != input_cloud->end(); pit++) {
+      float x0 = pit->x;
+      float y0 = pit->y;
+      r_angle = acosf( (x0*cosf(theta) + y0*sinf(theta))/sqrt(x0*x0+y0*y0));
+      if (abs(r_angle) > 0.5*config_.FieldOfView)
+        input_cloud->erase(pit);
+    }
   }
 
   // calculate euclidean distance of two points
@@ -390,6 +405,7 @@ namespace velodyne_detection
           new pcl::search::KdTree<pcl::PointXYZ>);
 
       pcl::fromROSMsg(*input, *input_cloud);
+      inFieldOfView(input_cloud);
 
       tree->setInputCloud(input_cloud);
 
@@ -526,6 +542,7 @@ namespace velodyne_detection
           new pcl::search::KdTree<pcl::PointXYZ>);
 
       pcl::fromROSMsg(*input, *input_cloud);
+      inFieldOfView(input_cloud);
 
       tree->setInputCloud(input_cloud);
 
@@ -714,9 +731,13 @@ namespace velodyne_detection
     ROS_INFO("Reconfigure Request");
     // use private node handle to get parameters
     // config_.frame_id = config_.frame_id;
-    config_.angle_offset = config_.angle_offset;
-    config_.track_width = config_.track_width;
-    config_.safe_pad = config_.safe_pad;
+    config_.angle_offset = config.angle_offset;
+    config_.track_width = config.track_width;
+    config_.safe_pad = config.safe_pad;
+    config_.ClusterTolerance = config.ClusterTolerance;
+    config_.MinClusterSize = config.MinClusterSize;
+    config_.MaxClusterSize = config.MaxClusterSize;
+    config_.FieldOfView = config.FieldOfView;
 
   }
 

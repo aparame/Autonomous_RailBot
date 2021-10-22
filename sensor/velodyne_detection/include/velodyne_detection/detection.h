@@ -81,6 +81,7 @@ namespace velodyne_detection
     trackinfo;
 
     trackinfo ontrack(float x, float y);
+    void inFieldOfView(pcl::PointCloud<pcl::PointXYZ>::Ptr &input_cloud);
 
     std::pair<int, int> findIndexOfMin(std::vector<std::vector<float>> distMat);
 
@@ -103,12 +104,13 @@ namespace velodyne_detection
     typedef struct
     {
       std::string frame_id;      ///< tf frame ID
-      double angle_offset;       ///< difference between lidar 0' direction and track direction in radians
+      double angle_offset;       ///< difference between lidar 0' direction and track direction in degrees
       double track_width;        ///< width of track in meters
       double safe_pad;         ///< safe padding width in meters
       double ClusterTolerance;
       int MinClusterSize;
       int MaxClusterSize;
+      double FieldOfView; // in degrees
     }
     Config;
     Config config_;
