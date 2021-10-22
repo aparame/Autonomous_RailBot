@@ -63,6 +63,7 @@
 
     <!-- start detection nodelet -->
     <include file="$(find velodyne_detection)/launch/detection_nodelet.launch">
+      <arg name="manager" value="$(arg manager)" />
       <arg name="frame_id" value="$(arg frame_id)"/>
     </include>
 
