@@ -89,6 +89,8 @@ namespace velodyne_detection
 
     void cloud_cb(const sensor_msgs::PointCloud2ConstPtr &input);
 
+    void mission_forward_cb(const std_msgs::Bool &forward);
+
     // Pointer to dynamic reconfigure service srv_
     // boost::shared_ptr<dynamic_reconfigure::Server<velodyne_pointcloud::DetectionNodeConfig>> srv_;
     // void reconfigure_callback(velodyne_pointcloud::DetectionNodeConfig& config, uint32_t level);
@@ -97,6 +99,7 @@ namespace velodyne_detection
     ros::NodeHandle node;
     ros::NodeHandle private_nh;
     ros::Subscriber velodyne_points;
+    ros::Subscriber mission_forward;
     ros::Publisher obstacle;
     ros::Publisher obstacle_distances;
 
@@ -105,6 +108,7 @@ namespace velodyne_detection
     {
       std::string frame_id;      ///< tf frame ID
       double angle_offset;       ///< difference between lidar 0' direction and track direction in degrees
+      double real_angle;
       double track_width;        ///< width of track in meters
       double safe_pad;         ///< safe padding width in meters
       double ClusterTolerance;
@@ -116,6 +120,7 @@ namespace velodyne_detection
     Config config_;
 
     bool firstFrame;
+
     std::vector<int> objID; // Output of the data association using KF
 
     // boost::shared_ptr<velodyne_rawdata::DataContainerBase> container_ptr;

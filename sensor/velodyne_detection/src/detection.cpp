@@ -46,6 +46,7 @@ namespace velodyne_detection
     // use private node handle to get parameters
     private_nh.param("frame_id", config_.frame_id, std::string("velodyne"));
     private_nh.param("angle_offset", config_.angle_offset, 0.0);
+    config_.real_angle = config_.angle_offset;
     private_nh.param("track_width", config_.track_width, 1.524);
     private_nh.param("safe_pad", config_.safe_pad, 0.1524);
     private_nh.param("ClusterTolerance", config_.ClusterTolerance, 0.3);
@@ -94,13 +95,14 @@ namespace velodyne_detection
 
     obstacle_distances = node.advertise<std_msgs::Float32MultiArray>("obstacle_distances", 1);
 
+    mission_forward = node.subscribe("mission_forward", 1, &Detection::mission_forward_cb, this);
     velodyne_points = node.subscribe("velodyne_points", 1, &Detection::cloud_cb, this);
   }
 
   Detection::trackinfo Detection::ontrack(float x, float y) {
     bool ontrack = false;
     float width = config_.safe_pad + 0.5 * config_.track_width;
-    float r_angle = - config_.angle_offset/180.0*3.14159;
+    float r_angle = - config_.real_angle/180.0*3.14159;
     float x1 = x * cosf(r_angle) - y * sinf(r_angle);
     float y1 = x * sinf(r_angle) + y * cosf(r_angle);
     if (x1 > 0.0 && abs(y1) <= width) ontrack = true;
@@ -114,7 +116,7 @@ namespace velodyne_detection
     // std::vector<int>::const_iterator pit;
     pcl::PointCloud<pcl::PointXYZ>::iterator pit;
     float r_angle;
-    float theta = config_.angle_offset/180.0*3.14159;
+    float theta = config_.real_angle/180.0*3.14159;
     for (pit = ros_cloud->begin(); pit != ros_cloud->end(); pit++) {
       float x0 = pit->x;
       float y0 = pit->y;
@@ -336,6 +338,15 @@ namespace velodyne_detection
     clustermsg->header.frame_id = config_.frame_id;
     clustermsg->header.stamp = ros::Time::now();
     pub.publish(*clustermsg);
+  }
+
+  void Detection::mission_forward_cb(const std_msgs::Bool &forward) {
+    if (forward.data) {
+      config_.real_angle = config_.angle_offset;
+    }
+    else { // backward
+      config_.real_angle = config_.angle_offset + 180.0;
+    }
   }
 
   void Detection::cloud_cb(const sensor_msgs::PointCloud2ConstPtr &input)
