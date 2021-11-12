@@ -35,7 +35,7 @@ def interpret(inst):
     elif (inst[0] == c.LOGSTART):
         # publish to rosbag_begin
         pass
-    else 
+    else:
         rospy.loginfo('Illegal instruction in mission')
 
 
