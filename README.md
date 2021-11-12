@@ -71,7 +71,7 @@ The setting is configured in the Jetson Xavier ("Lidar" network), remember to en
 
 Jetson settings: The Wifi IPv4 address is set to "192.168.2.22" with netmask **24**, and the gateway is set to "192.168.2.1".
 
-Connecting host settings: Set the Wifi (through Netgear) using address "192.168.2.*" (* could be any number from 2 to 255 except 22) with netmask **24**. The gateway is also set to "192.168.2.1".
+Connecting host settings: Set the Wifi (through Netgear) using address "192.168.2.x" (x could be any number from 2 to 255 except 22) with netmask **24**. The gateway is also set to "192.168.2.1".
 
 ### Camera (USB)
 
