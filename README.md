@@ -67,9 +67,11 @@ To revert back to internet connection, type in `nmcli dev disconnect eth0` and `
 
 The setting is configured in the Jetson Xavier ("Lidar" network), remember to enable "Use this connection only for resources on its network" under IPv4 routes setting when using Lidar and Wifi.
 
-### Wifi
+### Wifi (Local Network) using Netgear
 
-Manual IPv4 setting using IP address "192.168.1.152" (might need to change in the future), and set the netmask to **16**. 
+Jetson settings: The Wifi IPv4 address is set to "192.168.2.22" with netmask **24**, and the gateway is set to "192.168.2.1".
+
+Connecting host settings: Set the Wifi (through Netgear) using address "192.168.2.*" (* could be any number from 2 to 255 except 22) with netmask **24**. The gateway is also set to "192.168.2.1".
 
 ### Camera (USB)
 
