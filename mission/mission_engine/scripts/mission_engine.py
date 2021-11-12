@@ -27,6 +27,7 @@ def run_program():
         interpret(program[PC])
         PC++
         
+
 def interpret(inst):
     if (inst[0]== c.MOVE):
         # publish to trajectory
