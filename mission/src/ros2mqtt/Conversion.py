@@ -30,7 +30,7 @@ def callback_lidar(msg):
     # print(distance_to_obj)
 
     obstacle = msg.data
-    command = "go"
+    command = "stop"
     if obstacle:
        command = "go"
     else:
