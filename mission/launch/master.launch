@@ -1,0 +1,15 @@
+
+<launch>
+
+  <include file="launch/mqtt.launch">
+
+  </include>
+  
+  <node pkg="ros2mqtt" type="Conversion.py" name="conversion" output="screen"/>
+  
+  <include file="launch/mission.launch">
+
+  </include>
+  
+
+</launch>
