@@ -8,7 +8,7 @@ import numpy as np
 
 rospy.init_node("conversion")
 pub_vel = rospy.Publisher("/string_velocity", String, queue_size=1)
-#pub_LIDAR = rospy.Publisher("/obstacle", String, queue_size=1)
+pub_LIDAR = rospy.Publisher("/string_obstacle", String, queue_size=1)
 pub_Distance = rospy.Publisher("/distance_to_obj", String, queue_size=1)
 pub_lat = rospy.Publisher("/ros2host_lat", String, queue_size=1)
 pub_long = rospy.Publisher("/ros2host_long", String, queue_size=1)
@@ -25,29 +25,29 @@ def callback_vel(msg):
     pub_vel.publish(str(vel_x))
 
 
-#def callback_lidar(msg):
-    #distance_to_obj = msg.distance.sort()
-    #print(distance_to_obj)
+def callback_lidar(msg):
+    # distance_to_obj = msg.distance.sort()
+    # print(distance_to_obj)
 
-    #obstacle = msg.obstacle
-    #obstacle = "go"
-    #if distance_to_obj == obstacle:
-     #   obstacle = "stop"
-    #else:
-     #   obstacle = "go"
+    obstacle = msg.data
+    command = "go"
+    if obstacle:
+       command = "go"
+    else:
+       command = "stop"
 
-    #pub_LIDAR.publish(obstacle)
-    #pub_Distance.publish(distance_to_obj)
+    pub_LIDAR.publish(command)
+    # pub_Distance.publish(distance_to_obj)
 
 def callback_gps(data):
     gps_lat = data.latitude
     gps_long = data.longitude
     pub_lat.publish(str(gps_lat))
     pub_long.publish(str(gps_long))
-   
+
 
 
 sub = rospy.Subscriber("/state_estimation", Odometry, callback_vel)
-#sub2 = rospy.Subscriber("/lidar", Float64, callback_lidar)
+sub2 = rospy.Subscriber("/sensor/lidar/obstacles",Bool, callback_lidar)
 sub3 = rospy.Subscriber("/sensor/gps/fix",NavSatFix,callback_gps)
 rospy.spin()
