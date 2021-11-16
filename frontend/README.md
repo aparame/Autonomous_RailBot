@@ -7,11 +7,14 @@ This is the codebase for the host-side dashboard to control the Railbot. It has 
 # Pre-Requisites
 1. Install aedes (https://github.com/moscajs/aedes)
 2. Install node.js and npm (https://nodejs.dev/)
+3. Install aedes-cli (npm install aedes-cli -g)
+
 
 # Installation
 1. Run `npm install` in the `frontend` directory. This installs the Express webserver framework module. 
 2. Run `npm install` in the `frontend/dist` directory. This installs the Blockly, and MQTT framework code.
 3. All map tiles and map-serving javascript is currently hardcoded in the `dist/leaflet` and `dist/maps` subdirectories.
+4. Change the ip address in the /frontend/dist/index.js according to the ip adress of the host
 
 # Run the dashboard
 Note that for the dashboard to be meaningful, a Railbot must be running with the ROS MQTT Bridge node that is connected to the same MQTT broker. 
