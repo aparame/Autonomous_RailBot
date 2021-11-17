@@ -3,4 +3,6 @@
   </node>
   <node name="mission_rewriter" pkg="mission_engine" type="mission_rewriter.py" output="screen">
   </node>
+  <node name="conversion" pkg="mission_engine" type="conversion.py" output="screen">
+  </node>
 </launch>
