@@ -1,4 +1,4 @@
-#! /usr/bin/env/ python
+#!/usr/bin/env python
 import rospy
 from std_msgs.msg import String, Float64, Bool
 from nav_msgs.msg import Odometry
