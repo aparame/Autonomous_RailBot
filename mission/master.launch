@@ -1,0 +1,7 @@
+
+<launch>
+
+  <include file="$(find mission_engine)/launch/mission.launch"/>
+  <include file="$(find mqtt_bridge)/launch/mqtt.launch"/>
+
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+
+  <arg name="mission_home" default="$(find mission_engine)/missions/"/>
+
+  <node name="mission_engine" pkg="mission_engine" type="mission_engine.py" output="screen">
+    <param name="mission_home" value="$(arg mission_home)"/>
+  </node>
+  <node name="mission_rewriter" pkg="mission_engine" type="mission_rewriter.py" output="screen">
+  </node>
+  <node name="conversion" pkg="mission_engine" type="conversion.py" output="screen">
+  </node>
+</launch>

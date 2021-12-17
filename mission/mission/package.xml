@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<package format="2">
+
+  <name>mission</name>
+
+  <version>1.0.0</version>
+
+  <description>Mission for railbot</description>
+
+  <author>Weirong Yuan</author>
+
+  <maintainer email="yuan161@purdue.edu">Weirong Yuan</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>mission_engine</exec_depend>
+  <exec_depend>mqtt_bridge</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+
+  <export>
+
+    <metapackage />
+
+  </export>
+
+</package>
