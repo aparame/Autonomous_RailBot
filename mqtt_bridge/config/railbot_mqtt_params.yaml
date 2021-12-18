@@ -45,6 +45,11 @@ bridge:
 
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: std_msgs.msg:String
+    topic_from: /ros2host_info     #Info messages
+    topic_to: ros2host_info
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
     topic_from: /ros2host_long     #GPS_data
     topic_to: ros2host_long
 

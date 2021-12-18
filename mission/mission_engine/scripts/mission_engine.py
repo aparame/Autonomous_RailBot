@@ -51,7 +51,9 @@ def single_step():
     global autostep
     rospy.loginfo('State (%d)', state)
     if(execstate == EXECUTING):
-        rospy.loginfo('Ignoring single step command; previous command (%d) still not complete.', PC)
+        txt = 'Ignoring single step command; previous command ({0}) still not complete.'.format(PC)
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
     else:
         interpret(program[PC])
         autostep = False
@@ -60,7 +62,9 @@ def interpret(inst):
     global execstate, cumulative_x
     if (inst[0]== c.MOVE):
         # publish to trajectory
-        rospy.loginfo('started command %d: Move %5.2f',PC,inst[1])
+        txt = 'started command {0} : Move {1:5.2f}'.format(PC,inst[1])
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         cumulative_x += float(inst[1])
         pub_mission_active.publish(True)
         execstate = EXECUTING
@@ -70,15 +74,21 @@ def interpret(inst):
         # publish to rosbag_begin
         pass
     else :
-        rospy.loginfo('Illegal instruction in mission')
+        txt = 'Illegal instruction in mission'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
 
 def rewrite_callback(data):
     global program, PC, execstate,cumulative_x
     if (program == None):
-        rospy.loginfo('Weird -- No program loaded or executing; yet safety-monitor wants to rewrite the program. Should not happen - please investigate and debug')
+        txt = 'Weird -- No program loaded or executing; yet safety-monitor wants to rewrite the program. Should not happen - please investigate and debug'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         return
     elif (execstate == IDLE):
-        rospy.loginfo('Weird -- No command executing; yet safety-monitor wants to rewrite the program. Should not happen - please investigate and debug')
+        txt = 'Weird -- No command executing; yet safety-monitor wants to rewrite the program. Should not happen - please investigate and debug'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         return
     tokens = data.data.split()
     if (tokens[0] == "split"):
@@ -87,9 +97,13 @@ def rewrite_callback(data):
         partial_leg = splitPoint - (cumulative_x - program[PC][1])
         #correct the cumulative_x because only the partial leg was actually covered
         cumulative_x = cumulative_x -program[PC][1] + partial_leg
-        rospy.loginfo("Splitting %5.2f into %5.2f and %5.2f",program[PC][1],splitPoint,remainder)
+        txt = "Splitting {0:5.2f} into {1:5.2f} and {2:5.2f}".format(program[PC][1],splitPoint,remainder)
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         rospy.loginfo(str(program))
+        pub_ros2host_info.publish(str(program))
         rospy.loginfo(str(PC))
+        pub_ros2host_info.publish(str(PC))
         # delete old command
         rospy.loginfo("Old program: " + str(program))
         prenode = [program[PC][0], partial_leg]
@@ -162,12 +176,16 @@ def host2ros_callback(data):
             rospy.loginfo('Purged loaded program')
         elif(tokens[0] == "execute"):
             if(program == None):
-                rospy.loginfo('ERROR: No mission loaded. Load mission before attempting to execute.')
+                txt = 'ERROR: No mission loaded. Load mission before attempting to execute.'
+                rospy.loginfo(txt)
+                pub_ros2host_info.publish(txt)
             else:
                 run_program()
         elif(tokens[0] == "singlestep"):
             if(program == None):
-                rospy.loginfo('ERROR: No mission loaded. Load mission before attempting to execute.')
+                txt = 'ERROR: No mission loaded. Load mission before attempting to execute.'
+                rospy.loginfo(txt)
+                pub_ros2host_info.publish(txt)
             else:
                 single_step()
         elif(tokens[0] == "stop"):
@@ -198,6 +216,9 @@ def mission_engine():
 
     global pub_exec_status
     pub_exec_status = rospy.Publisher('ros2host_exec_status', String, queue_size=10)
+
+    global pub_ros2host_info
+    pub_ros2host_info = rospy.Publisher('ros2host_info', String, queue_size=10)
 
     rospy.spin()
 
