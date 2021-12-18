@@ -13,6 +13,7 @@ var mqttOptions = {
 
 }
 var client  = mqtt.connect('ws://192.168.1.125:3000')
+//var client = mqtt.connect('ws://192.168.1.125:3000');
 
 function onLoad() {
 
@@ -21,42 +22,18 @@ function onLoad() {
     L.tileLayer('maps/{z}/{x}/{y}.png', {maxZoom: 16}).addTo(mymap);
     mymarker = L.marker([40.422031, -86.894977]).addTo(mymap);
 
-    /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
-    var toolbox = document.getElementById("toolbox");
-
-    var options = { 
-	    toolbox : toolbox, 
-	    collapse : true, 
-	    comments : true, 
-	    disable : true, 
-	    maxBlocks : Infinity, 
-	    trashcan : true, 
-	    horizontalLayout : false, 
-	    toolboxPosition : 'start', 
-	    css : true, 
-	    media : 'https://blockly-demo.appspot.com/static/media/', 
-	    rtl : false, 
-	    scrollbars : true, 
-	    sounds : true, 
-	    oneBasedIndex : true
-    };
-
-    /* Inject your workspace */ 
-    var workspace = Blockly.inject("blockly-holder", options);
-
-    /* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
-
-    /* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
-    var workspaceBlocks = document.getElementById("workspaceBlocks"); 
-
-    /* Load blocks to workspace. */
-    Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+   
 }
 
 client.on('connect', function () {
   client.subscribe('ros2host_speed', function (err) {
     if (!err) {
         console.log("Subscribe success: speed.")
+    }
+  })
+  client.subscribe('ros2host_info', function (err) {
+    if (!err) {
+        console.log("Subscribe success: info.")
     }
   })
   client.subscribe('ros2host_temp', function (err) {
@@ -95,14 +72,17 @@ client.on('message', function (topic, message) {
 })
 
 function commonMessageProcessing(topic,message) {
-    if(topic =="ros2host_latlong") {
+  let messageVal = JSON.parse(message);
+  if(topic =="ros2host_latlong") {
         let latLngArray = eval(message.toString());
         mymarker.setLatLng(latLngArray);
 
     }
+    else if(topic=="ros2host_info") {
+      // Special case: Do nothing; no dedicated display
+    }
     else {
         var elem = document.getElementById(topic);
-        let messageVal = JSON.parse(message);
         if (topic =="ros2host_temp") messageVal.data = messageVal.data + "&deg;C";
         elem.innerHTML = messageVal.data;
     }
@@ -116,6 +96,8 @@ function addToLog(topic,message, leftRight) {
     colors["ros2host_odom"] = "bg-red-200";
     colors["host2ros"] = "bg-gray-200";
     colors["ros2host_latlong"] = "bg-yellow-200";
+    colors["ros2host_info"] = "bg-gray-200";
+
     let leftRightClass;
     if (leftRight =="left") leftRightClass = "self-start";
     else leftRightClass = "self-end"
