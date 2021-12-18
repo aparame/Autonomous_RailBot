@@ -1,0 +1,81 @@
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  connection:
+    host: 172.17.229.254 # 128.46.76.31  # 10.184.115.131
+    #Preet's_laptop_ip_address_with_NETGEAR_wifi
+    port: 1883
+    keepalive: 60
+  private_path: /private
+serializer: json:dumps
+deserializer: json:loads
+bridge:
+  # ros2host_speed and host2ros
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /string_velocity      #Velocity_in_X
+    topic_to: string_velocity
+  #   topic_from: /ros2host_speed
+  #   topic_to: ros2host_speed
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:Bool
+    topic_from: /mission_active
+    topic_to: mission_active
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /obstacle             #Go/Stop_string_from_lidar_obstacle_detection
+    topic_to: obstacle
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /distance_to_obj
+    topic_to: distance_to_obj         #Distance_to_nearest_object_on_lidar
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /string_set_speed     #Set_speed+0.2
+    topic_to: string_set_speed
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /ros2host_lat     #GPS_data
+    topic_to: ros2host_lat
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /ros2host_long     #GPS_data
+    topic_to: ros2host_long
+
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: host2ros
+    topic_to: /host2ros
+  # ping pong
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:Bool
+    topic_from: /ping
+    topic_to: ping
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:Bool
+    topic_from: ping
+    topic_to: /pong
+  # echo back
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /echo
+    topic_to: echo
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: echo
+    topic_to: /back
+  # private path
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /private/echo
+    topic_to: ~/echo
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: ~/echo
+    topic_to: /private/back
