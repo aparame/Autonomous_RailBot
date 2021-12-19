@@ -35,11 +35,15 @@ cumulative_x = 0 #cumulative distance traversed
 
 def load_program(mission_name):
     global program
-    rospy.loginfo('loading %s', c.MISSION_HOME + mission_name)
+    txt = f'loading {c.MISSION_HOME + mission_name}'
+    rospy.loginfo(txt)
+    pub_ros2host_info.publish(txt)
     f = open(c.MISSION_HOME + mission_name,'r')
     program = simplejson.load(f)
     f.close()
-    rospy.loginfo('loaded %d commands', len(program))
+    txt = f'loaded {len(program)} commands'
+    rospy.loginfo(txt)
+    pub_ros2host_info.publish(txt)
 
 def run_program():
     # Main command interpretation
@@ -105,7 +109,9 @@ def rewrite_callback(data):
         rospy.loginfo(str(PC))
         pub_ros2host_info.publish(str(PC))
         # delete old command
-        rospy.loginfo("Old program: " + str(program))
+        txt = "Old program: " + str(program)
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         prenode = [program[PC][0], partial_leg]
         postnode = [program[PC][0], remainder]
         del program[PC]
@@ -116,12 +122,18 @@ def rewrite_callback(data):
             program.append(prenode)
             program.append(postnode)
         PC+=1
-        rospy.loginfo("Rewritten new program: " + str(program))
+        txt = "Rewritten new program: " + str(program)
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         if (autostep):
-            rospy.loginfo('starting command number %d in new program',PC)
+            txt = f'starting command number {PC} in new program'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
             interpret(program[PC])
         else:
-            rospy.loginfo('Waiting to continue execution (or singlestep) at new command %d',PC)
+            txt = f'Waiting to continue execution (or singlestep) at new command {PC}'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
             execstate = IDLE
     else:
         #other program rewrite cases. For future use cases.
@@ -130,28 +142,42 @@ def rewrite_callback(data):
 def cmd_done_callback(data):
     global PC, execstate, program
     if (program == None):
-        rospy.loginfo('Weird -- No program loaded or executing; yet bot claims commands are done executing. Should not happen - please investigate and debug')
+        txt = 'Weird -- No program loaded or executing; yet bot claims commands are done executing. Should not happen - please investigate and debug'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         return
     elif (execstate == IDLE):
-        rospy.loginfo('Weird -- No command executing; yet bot claims commands are done executing. Should not happen - please investigate and debug')
+        txt = 'Weird -- No command executing; yet bot claims commands are done executing. Should not happen - please investigate and debug'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         return
     elif (data.data == False):
-        rospy.loginfo('Weird -- cmd_done == False. Should not happen - please investigate and debug')
+        txt = 'Weird -- cmd_done == False. Should not happen - please investigate and debug'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         return
-    rospy.loginfo('Done with command number %d',PC)
+    txt = f'Done with command number {PC}'
+    rospy.loginfo(txt)
+    pub_ros2host_info.publish(txt)
     PC +=1
     if(PC == len(program)):
         pub_mission_active.publish(False)
         program = None
         execstate = IDLE
         PC = 0
-        rospy.loginfo('Done with mission. Reload next mission to continue.')
+        txt = 'Done with mission. Reload next mission to continue.'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
     else:
         if (autostep):
-            rospy.loginfo('starting command number %d',PC)
+            txt = f'starting command number {PC}'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
             interpret(program[PC])
         else:
-            rospy.loginfo('Waiting to continue execution (or singlestep) at command %d',PC)
+            txt = f'Waiting to continue execution (or singlestep) at command {PC}'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
             execstate = IDLE
 
 def host2ros_callback(data):
@@ -159,21 +185,29 @@ def host2ros_callback(data):
     tokens = data.data.split()
     if(state == WAITING):
         state = BUSY
-        rospy.loginfo('received %s when ready', data.data)
+        txt = f'received {data.data} when ready'
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         if(tokens[0] == "load"):
             if len(tokens) == 1:
-                rospy.loginfo('Please give me a mission to load')
+                txt = 'Please give me a mission to load'
+                rospy.loginfo(txt)
+                pub_ros2host_info.publish(txt)
             else:
                 try:
                     load_program(str(tokens[1]))
                 except:
-                    rospy.loginfo("Cannot load mission file "+str(tokens[1]))
+                    txt = "Cannot load mission file "+str(tokens[1])
+                    rospy.loginfo(txt)
+                    pub_ros2host_info.publish(txt)
         elif(tokens[0] == "purge"):
             program = None
             PC = 0
             cumulative_x = 0
             execstate = IDLE
-            rospy.loginfo('Purged loaded program')
+            txt = 'Purged loaded program'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
         elif(tokens[0] == "execute"):
             if(program == None):
                 txt = 'ERROR: No mission loaded. Load mission before attempting to execute.'
@@ -191,7 +225,9 @@ def host2ros_callback(data):
         elif(tokens[0] == "stop"):
             pass
         else:
-            rospy.loginfo("Illegal instruction %s", data.data)
+            txt = f'Illegal instruction {data.data}'
+            rospy.loginfo(txt)
+            pub_ros2host_info.publish(txt)
         state = WAITING
     else:
         pass

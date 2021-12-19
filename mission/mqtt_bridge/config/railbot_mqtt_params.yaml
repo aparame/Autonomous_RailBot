@@ -2,7 +2,7 @@ mqtt:
   client:
     protocol: 4      # MQTTv311
   connection:
-    host: localhost # 128.46.76.31  # 10.184.115.131
+    host: 128.46.214.189 # 128.46.76.31  # 10.184.115.131
     #Preet's_laptop_ip_address_with_NETGEAR_wifi
     port: 1883
     keepalive: 60
@@ -17,7 +17,6 @@ bridge:
     topic_to: string_velocity
   #   topic_from: /ros2host_speed
   #   topic_to: ros2host_speed
-
 
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: std_msgs.msg:String
@@ -38,6 +37,11 @@ bridge:
     msg_type: std_msgs.msg:String
     topic_from: /ros2host_lat     #GPS_data
     topic_to: ros2host_lat
+
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /ros2host_info     #Info messages
+    topic_to: ros2host_info
 
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: std_msgs.msg:String

@@ -1,1 +1,1 @@
-aedes --protos tcp ws --host 192.168.1.125 --verbose
+node ./node_modules/aedes-cli/bin/aedes --protos tcp ws --host 128.46.214.189 --verbose

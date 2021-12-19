@@ -12,7 +12,7 @@ var botPosition;
 var mqttOptions = {
 
 }
-var client  = mqtt.connect('ws://192.168.1.125:3000')
+var client  = mqtt.connect('ws://128.46.214.189:3000')
 //var client = mqtt.connect('ws://192.168.1.125:3000');
 
 function onLoad() {
@@ -22,7 +22,7 @@ function onLoad() {
     L.tileLayer('maps/{z}/{x}/{y}.png', {maxZoom: 16}).addTo(mymap);
     mymarker = L.marker([40.422031, -86.894977]).addTo(mymap);
 
-   
+
 }
 
 client.on('connect', function () {
@@ -68,7 +68,7 @@ client.on('message', function (topic, message) {
   console.log("on topic " + topic + ": received message : " + message.toString())
   //client.end()
   commonMessageProcessing(topic,message);
-  
+
 })
 
 function commonMessageProcessing(topic,message) {
