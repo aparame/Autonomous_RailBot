@@ -35,13 +35,13 @@ cumulative_x = 0 #cumulative distance traversed
 
 def load_program(mission_name):
     global program
-    txt = f'loading {c.MISSION_HOME + mission_name}'
+    txt = 'loading ' + c.MISSION_HOME + mission_name
     rospy.loginfo(txt)
     pub_ros2host_info.publish(txt)
     f = open(c.MISSION_HOME + mission_name,'r')
     program = simplejson.load(f)
     f.close()
-    txt = f'loaded {len(program)} commands'
+    txt = 'loaded ' + str(len(program)) + ' commands'
     rospy.loginfo(txt)
     pub_ros2host_info.publish(txt)
 
@@ -126,12 +126,12 @@ def rewrite_callback(data):
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         if (autostep):
-            txt = f'starting command number {PC} in new program'
+            txt = 'starting command number ' + str(PC) + ' in new program'
             rospy.loginfo(txt)
             pub_ros2host_info.publish(txt)
             interpret(program[PC])
         else:
-            txt = f'Waiting to continue execution (or singlestep) at new command {PC}'
+            txt = 'Waiting to continue execution (or singlestep) at new command ' + str(PC)
             rospy.loginfo(txt)
             pub_ros2host_info.publish(txt)
             execstate = IDLE
@@ -156,7 +156,7 @@ def cmd_done_callback(data):
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         return
-    txt = f'Done with command number {PC}'
+    txt = 'Done with command number {0}'.format(PC)
     rospy.loginfo(txt)
     pub_ros2host_info.publish(txt)
     PC +=1
@@ -170,12 +170,12 @@ def cmd_done_callback(data):
         pub_ros2host_info.publish(txt)
     else:
         if (autostep):
-            txt = f'starting command number {PC}'
+            txt = 'starting command number {0}'.format(PC)
             rospy.loginfo(txt)
             pub_ros2host_info.publish(txt)
             interpret(program[PC])
         else:
-            txt = f'Waiting to continue execution (or singlestep) at command {PC}'
+            txt = 'Waiting to continue execution (or singlestep) at command {0}'.format(PC)
             rospy.loginfo(txt)
             pub_ros2host_info.publish(txt)
             execstate = IDLE
@@ -185,7 +185,7 @@ def host2ros_callback(data):
     tokens = data.data.split()
     if(state == WAITING):
         state = BUSY
-        txt = f'received {data.data} when ready'
+        txt = 'received ' + str(data.data) + ' when ready'
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         if(tokens[0] == "load"):
@@ -225,7 +225,7 @@ def host2ros_callback(data):
         elif(tokens[0] == "stop"):
             pass
         else:
-            txt = f'Illegal instruction {data.data}'
+            txt = 'Illegal instruction ' + str(data.data)
             rospy.loginfo(txt)
             pub_ros2host_info.publish(txt)
         state = WAITING
