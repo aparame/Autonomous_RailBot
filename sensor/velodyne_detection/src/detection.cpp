@@ -119,9 +119,11 @@ namespace velodyne_detection
 
     }
 
+    std::vector<float> distances_pub;
     mission_stop.data = false;
     for (std::vector<float>::iterator it = distances.begin() ; it != distances.end(); ++it) {
       if (*it < config_.DangerDistance && *it >= 0.0) {
+        if (distances_pub.size() < 10) distances_pub.push_back(*it);
         mission_stop.data = true;
       }
       else if (*it > 10.0){
@@ -133,10 +135,10 @@ namespace velodyne_detection
 
     std_msgs::Float32MultiArray msg;
     msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-    msg.layout.dim[0].size = distances.size();
+    msg.layout.dim[0].size = distances_pub.size();
     msg.layout.dim[0].stride = 1;
     msg.layout.dim[0].label = "Distances";
-    msg.data.insert(msg.data.end(), distances.begin(), distances.end());
+    msg.data.insert(msg.data.end(), distances_pub.begin(), distances_pub.end());
 
     obstacle.publish(mission_stop);
     obstacle_distances.publish(msg);
