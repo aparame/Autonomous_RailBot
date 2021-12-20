@@ -70,10 +70,6 @@ def interpret(inst):
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         cumulative_x += float(inst[1])
-        if (float(inst[1]) >= 0.0):
-            pub_mission_forward.publish(True)
-        else:
-            pub_mission_forward.publish(False)
         pub_mission_active.publish(True)
         execstate = EXECUTING
         pub_trajectory.publish(inst[1])
@@ -108,10 +104,10 @@ def rewrite_callback(data):
         txt = "Splitting {0:5.2f} into {1:5.2f} and {2:5.2f}".format(program[PC][1],splitPoint,remainder)
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
-        rospy.loginfo(str(program))
-        pub_ros2host_info.publish(str(program))
-        rospy.loginfo(str(PC))
-        pub_ros2host_info.publish(str(PC))
+        # rospy.loginfo("Program: " + str(program))
+        # pub_ros2host_info.publish("Program: " + str(program))
+        rospy.loginfo("PC: " + str(PC))
+        pub_ros2host_info.publish("PC: " + str(PC))
         # delete old command
         txt = "Old program: " + str(program)
         rospy.loginfo(txt)
@@ -259,9 +255,6 @@ def mission_engine():
 
     global pub_ros2host_info
     pub_ros2host_info = rospy.Publisher('ros2host_info', String, queue_size=10)
-
-    global pub_mission_forward
-    pub_mission_forward = rospy.Publisher('mission_forward', Bool, queue_size=1)
 
     rospy.spin()
 

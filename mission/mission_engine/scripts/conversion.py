@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env/ python
 import rospy
 from std_msgs.msg import String, Float64, Bool
 from nav_msgs.msg import Odometry
@@ -16,7 +16,7 @@ def callback_lidar(msg):
 
     obstacle = msg.data
     command = "stop"
-    if obstacle:
+    if not obstacle:
        command = "go"
     else:
        command = "stop"
@@ -39,7 +39,7 @@ def conversion():
     global pub_long
 
     pub_vel = rospy.Publisher("/string_velocity", String, queue_size=1)
-    pub_LIDAR = rospy.Publisher("/string_obstacle", String, queue_size=1)
+    pub_LIDAR = rospy.Publisher("/string_lidar/obstacle", String, queue_size=1)
     pub_Distance = rospy.Publisher("/distance_to_obj", String, queue_size=1)
     pub_lat = rospy.Publisher("/ros2host_lat", String, queue_size=1)
     pub_long = rospy.Publisher("/ros2host_long", String, queue_size=1)
