@@ -71,9 +71,13 @@ def interpret(inst):
         pub_ros2host_info.publish(txt)
         cumulative_x += float(inst[1])
         if (float(inst[1]) >= 0.0):
+            txt = 'Detecting obstacles in the front'
             pub_mission_forward.publish(True)
         else:
+            txt = 'Detecting obstacles in the back'
             pub_mission_forward.publish(False)
+        rospy.loginfo(txt)
+        pub_ros2host_info.publish(txt)
         pub_mission_active.publish(True)
         execstate = EXECUTING
         pub_trajectory.publish(inst[1])
