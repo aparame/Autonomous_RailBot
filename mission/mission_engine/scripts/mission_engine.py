@@ -70,6 +70,10 @@ def interpret(inst):
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         cumulative_x += float(inst[1])
+        if (float(inst[1]) >= 0.0):
+            pub_mission_forward.publish(True)
+        else:
+            pub_mission_forward.publish(False)
         pub_mission_active.publish(True)
         execstate = EXECUTING
         pub_trajectory.publish(inst[1])
@@ -255,6 +259,9 @@ def mission_engine():
 
     global pub_ros2host_info
     pub_ros2host_info = rospy.Publisher('ros2host_info', String, queue_size=10)
+
+    global pub_mission_forward
+    pub_mission_forward = rospy.Publisher('mission_forward', Bool, queue_size=1)
 
     rospy.spin()
 
