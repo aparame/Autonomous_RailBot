@@ -49,7 +49,7 @@ def conversion():
     pub_static_speed.publish(set_static_speed)
 
     rospy.Subscriber("/state_estimation", Odometry, callback_vel)
-    rospy.Subscriber("/sensor/lidar/obstacles",Bool, callback_lidar)
+    rospy.Subscriber("/sensor/lidar/obstacle",Bool, callback_lidar)
     rospy.Subscriber("/sensor/gps/fix",NavSatFix,callback_gps)
     rospy.spin()
 
