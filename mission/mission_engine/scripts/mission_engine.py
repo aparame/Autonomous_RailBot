@@ -110,7 +110,7 @@ def rewrite_callback(data):
 
         # To send cumulative information to the motor controller
         # for handling relative vs. absolute displacement
-        pub_cumulative.publish(partial_leg)
+        pub_cumulative.publish(splitPoint)
 
         #correct the cumulative_x because only the partial leg was actually covered
         cumulative_x = cumulative_x -program[PC][1] + partial_leg
