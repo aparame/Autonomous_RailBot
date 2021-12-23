@@ -1,0 +1,16 @@
+<launch>
+	<include file ="$(find razor_imu_9dof)/launch/razor-pub.launch"/>
+	<include file ="$(find motor_control)/launch/motor_control.launch"/>
+	<include file ="$(find encoder_data)/launch/encoder_data.launch"/>
+	<include file ="$(find health_monitor)/launch/health_monitor.launch"/>
+	<include file ="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
+
+	<node pkg="rosbag" type="record" name="rosbag_lidar" args="record -O /home/railbot/Desktop/lidar.bag /sensor/lidar/scan /sensor/lidar/velodyne_packets /sensor/lidar/velodyne_points" />
+	<node pkg="rosbag" type="record" name="rosbag_state_estimation" args="record -O /home/railbot/Desktop/state_estimation.bag /state_estimation" />
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" output="screen">
+	<rosparam command="load" file="$(find state_estimation)/config/ekf_localization.yaml"/>
+	<remap from="odometry/filtered" to="state_estimation"/>
+	</node>
+:
+
+</launch>
