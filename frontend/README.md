@@ -14,7 +14,6 @@ This is the codebase for the host-side dashboard to control the Railbot. It has 
 1. Run `npm install` in the `frontend` directory. This installs the Express webserver framework module. 
 2. Run `npm install` in the `frontend/dist` directory. This installs the Blockly, and MQTT framework code.
 3. All map tiles and map-serving javascript is currently hardcoded in the `dist/leaflet` and `dist/maps` subdirectories.
-4. Change the ip address in the `/frontend/dist/index.js` according to the ip adress of the host
 
 # Run the dashboard
 Note that for the dashboard to be meaningful, a Railbot must be running with the ROS MQTT Bridge node that is connected to the same MQTT broker. 
@@ -22,3 +21,4 @@ Note that for the dashboard to be meaningful, a Railbot must be running with the
 1. **Start the MQTT broker.** On windows hosts, run `broker-start.bat`. If using a Mac or Linux host, you may directly use the command `aedes --protos tcp ws --host <hostname or ip address> --verbose`. 
 2. **Start the web server.** Run `node dashserve.js`. By default, the server listens on `http:\\localhost:4040`.
 3. Launch a browser and navigate to `http:\\localhost:4040`
+4. Change the ip address in the `/frontend/dist/index.js` according to the ip adress of the host
