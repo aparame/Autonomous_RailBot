@@ -5,7 +5,11 @@
   <arg name="safe_pad" default="0.1524" />
   <arg name="ClusterTolerance" default="0.3" />
   <arg name="MinClusterSize" default="10" />
-  <arg name="MaxClusterSize" default="600" />
+  <arg name="MaxClusterSize" default="999" />
+  <arg name="FieldOfView" default="120.0" />
+  <arg name="MinHeight" default="-0.6" />
+  <arg name="MaxHeight" default="0.6" />
+  <arg name="DangerDistance" default="3.0" />
   <node pkg="velodyne_detection" type="velodyne_detection_node" name="velodyne_detection_node" >
     <param name="frame_id" value="$(arg frame_id)"/>
     <param name="angle_offset" value="$(arg angle_offset)"/>
@@ -14,5 +18,9 @@
     <param name="ClusterTolerance" value="$(arg ClusterTolerance)"/>
     <param name="MinClusterSize" value="$(arg MinClusterSize)"/>
     <param name="MaxClusterSize" value="$(arg MaxClusterSize)"/>
+    <param name="FieldOfView" value="$(arg FieldOfView)"/>
+    <param name="MinHeight" value="$(arg MinHeight)"/>
+    <param name="MaxHeight" value="$(arg MaxHeight)"/>
+    <param name="DangerDistance" value="$(arg DangerDistance)"/>
   </node>
 </launch>

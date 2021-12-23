@@ -26,7 +26,7 @@ namespace velodyne_detection
     DetectionNodeConfig>::CallbackType f;
     f = boost::bind (&Detection::reconfigure_callback, this, _1, _2);
     srv_->setCallback (f);
-
+    ros::Rate rate(5);
     obstacle_distances = node.advertise<std_msgs::Float32MultiArray>("obstacle_distances", 1);
     obstacle = node.advertise<std_msgs::Bool>("obstacle", 1);
     mission_forward = node.subscribe("mission_forward", 1, &Detection::mission_forward_cb, this);

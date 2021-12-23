@@ -270,7 +270,7 @@ def mission_engine():
     pub_ros2host_info = rospy.Publisher('ros2host_info', String, queue_size=10)
 
     global pub_mission_forward
-    pub_mission_forward = rospy.Publisher('mission_forward', Bool, queue_size=1)
+    pub_mission_forward = rospy.Publisher('/sensor/lidar/mission_forward', Bool, queue_size=1)
 
     global pub_cumulative
     pub_cumulative = rospy.Publisher('cumulative', Float32, queue_size=10)
