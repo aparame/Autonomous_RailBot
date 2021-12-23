@@ -24,12 +24,12 @@ class MotorControl():
         self.obstacle = False
         self.state = IDLE
         self.feedback_gain = 0.1
+        self.cumulative = 0  # Currently only cumulative  x displacement is tracked
         self.current_x_pose = 0
         self.current_y_pose = 0
         self.current_x_vel = 0
         self.current_y_vel = 0
         self.cmd_vel = 0
-        self.pwm = 127
         self.timer = rospy.Timer(rospy.Duration(1), self.timer_callback)
     
     def pose_callback(self, msg):
@@ -44,6 +44,9 @@ class MotorControl():
         self.current_x_vel = msg.linear.x
         self.current_y_vel = msg.linear.y
 
+    def cumulative_callback(self, msg):
+        self.cumulative = msg.data
+
     def trajectory_callback(self, msg):
         self.trajectory = msg.data
         self.state = RUNNING
@@ -52,9 +55,10 @@ class MotorControl():
     def obstacle_callback(self, msg):
         self.obstacle = msg.data
         if(self.obstacle):
-            donepub.publish(True)
+            #donepub.publish(True)
             self.cmd_vel = 0
             self.trajectory = 0
+            self.state = IDLE
 
     def timer_callback(self,timer):
         if(self.state == IDLE):
@@ -64,8 +68,8 @@ class MotorControl():
         self.acceleration_bounding()
 
     def feedback_controller(self):
-        dx = self.trajectory - self.current_x_pose
-        dy = 0 - self.current_y_pose
+        dx = self.cumulative + self.trajectory - self.current_x_pose
+        dy = 0 - self.current_y_pose # May have to be fied for curved tracks
 
         rho = math.sqrt(dx**2 + dy**2)
         if(rho > 0.1):
@@ -79,6 +83,9 @@ class MotorControl():
         else:
             self.cmd_vel = 0
             self.state = IDLE
+            # update cumulative displacement locally
+            # in case of normal completion
+            self.cumulative += self.trajectory 
             rospy.loginfo('reached target position. Command done.')
             donepub.publish(True) # Done executing the command
     
@@ -86,33 +93,25 @@ class MotorControl():
     def acceleration_bounding(self):
         # If IDLE, the PWM should be logical zero (which corresponds to PWM=127)
         if(self.state == IDLE):
-            self.pwm = 127
-            pub.publish(self.pwm)
+            pub.publish(127)
             return    
-
-        diff = self.current_x_vel - self.cmd_vel
-        if(abs(diff) > 0.02): #velocity error threshold
-            if(diff > 0): # Actual velocity greater than setpoint, reduce PWM
-                self.pwm -= 1
-                if(self.pwm < MIN_PWM):
-                    self.pwm = MIN_PWM
-            elif(diff < 0): # Actual velocity less than setpoint, increase PWM
-                self.pwm += 1
-                if(self.pwm > MAX_PWM):
-                    self.pwm = MAX_PWM
-            
-            rospy.loginfo('pwm: %d',self.pwm)
-            pub.publish(self.pwm)
+        if (self.trajectory <0):
+            PWM = 1 # negative direction PWM value
+        elif (self.trajectory == 0):
+            PWM = 127
         else:
-            rospy.loginfo('reached target velocity %5.2f',self.current_x_vel)
+            PWM = 160 # positive direction PWM value 
+        rospy.loginfo('pwm: %d',PWM)
+        pub.publish(PWM)
 
-            
+        
     def main(self):
-        rospy.Subscriber('/state_estimations/odometry', Odometry, self.pose_callback) #need to check if the topic is correct
-        rospy.Subscriber('/testX', Float32, self.pseudopose_callback) # fake odometry for testing. Only X position 
+        rospy.Subscriber('/cumulative', Float32, self.cumulative_callback) # to handle cumualtive displacement in case of obstacles
+        rospy.Subscriber('/odom', Odometry, self.pose_callback) #need to check if the topic is correct
+        rospy.Subscriber('/pose/pose/position/x', Float32, self.pseudopose_callback) # fake odometry for testing. Only X position 
         rospy.Subscriber('/trajectory', Float32, self.trajectory_callback) # need to check the topic name and type. Expecting a 32 bit signed Int for the mission
-        rospy.Subscriber('/obstacle', Bool, self.obstacle_callback) #need to check the topic name and type. Expecting a boolean
-        rospy.Subscriber('/state_estimations/velocity', Twist, self.velocity_callback) #need to validate the topic name and msg type
+        rospy.Subscriber('/sensor/lidar/obstacle', Bool, self.obstacle_callback) #need to check the topic name and type. Expecting a boolean
+        rospy.Subscriber('/odom/twist/twist', Twist, self.velocity_callback) #need to validate the topic name and msg type
 
         global pub 
         pub = rospy.Publisher('/velocity', Int32, queue_size = 10)

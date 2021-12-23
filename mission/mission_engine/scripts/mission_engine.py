@@ -107,9 +107,14 @@ def rewrite_callback(data):
         splitPoint = float(tokens[1])
         remainder = cumulative_x - splitPoint
         partial_leg = splitPoint - (cumulative_x - program[PC][1])
+
+        # To send cumulative information to the motor controller
+        # for handling relative vs. absolute displacement
+        pub_cumulative.publish(partial_leg)
+
         #correct the cumulative_x because only the partial leg was actually covered
         cumulative_x = cumulative_x -program[PC][1] + partial_leg
-        txt = "Splitting {0:5.2f} into {1:5.2f} and {2:5.2f}".format(program[PC][1],splitPoint,remainder)
+        txt = "Splitting {0:5.2f} into {1:5.2f} and {2:5.2f}".format(program[PC][1],partial_leg,remainder)
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
         # rospy.loginfo("Program: " + str(program))
@@ -266,6 +271,9 @@ def mission_engine():
 
     global pub_mission_forward
     pub_mission_forward = rospy.Publisher('mission_forward', Bool, queue_size=1)
+
+    global pub_cumulative
+    pub_cumulative = rospy.Publisher('cumulative', Float32, queue_size=10)
 
     rospy.spin()
 
