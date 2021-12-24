@@ -41,7 +41,7 @@ def obstacle_callback(data):
     if((data.data == "stop") and (blocked== False)):
         # Going from unblocked to blocked; Nothing to do other than tracking state
         next_blocked = True
-        txt = "Obstable detected! Absolute position: " + str(x) + ". Relative: " + str(dx)
+        txt = "Obstable detected! Absolute position: " + str(x)
         rospy.loginfo(txt)
         pub_ros2host_info.publish(txt)
     elif ((data.data == "go") and (blocked == True)):
